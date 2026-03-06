@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>⚾ 2026 WBC 戰情室</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#121212">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" href="icon.png">
+
+    <meta property="og:title" content="⚾ 2026 WBC 專屬即時戰情室">
+    <meta property="og:description" content="零時差掌握 2026 世界棒球經典賽！即時比分、文字轉播、先發打線與賽後戰報，By 老杜。">
+    <meta property="og:image" content="https://tranquil-kheer-908c7c.netlify.app/share.jpg"> <meta property="og:type" content="website">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #121212; color: #ffffff; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; overscroll-behavior-y: none;}
+        
+        .header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 600px; position: relative; margin-bottom: 20px;}
+        h1 { color: #e0e0e0; font-size: 1.45rem; margin: 0; flex-grow: 1; text-align: center; letter-spacing: 1px; padding: 0 45px; line-height: 1.3;}
+        .menu-btn { background: none; border: none; color: #e0e0e0; font-size: 1.8rem; cursor: pointer; padding: 5px; position: absolute; right: 0; outline: none; -webkit-tap-highlight-color: transparent;}
+        .date-menu { position: absolute; top: 45px; right: 0; background-color: #1e1e1e; border: 1px solid #444; border-radius: 8px; box-shadow: 0 8px 16px rgba(0,0,0,0.8); display: none; flex-direction: column; z-index: 100; overflow: hidden; min-width: 180px;}
+        .date-menu.open { display: flex; }
+        .menu-item { padding: 14px 20px; border-bottom: 1px solid #333; cursor: pointer; color: #ccc; font-size: 1rem; text-align: center;}
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item:hover { background-color: #2a2a2a; color: #fff; }
+        .menu-item.active { background-color: #bb86fc; color: #121212; font-weight: bold; }
+
+        #games-container { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; padding-bottom: 30px;}
+
+        .game-card { background-color: #1e1e1e; border-radius: 12px; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); border: 1px solid #333; }
+        .game-date-badge { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px dashed #333; letter-spacing: 1px;}
+        .score-board { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; }
+        .team-box { text-align: center; width: 35%; }
+        .team-name { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; color: #bb86fc; }
+        .score { font-size: 2.5rem; font-weight: 900; }
+        .game-status { width: 30%; text-align: center; font-size: 0.95rem; color: #aaaaaa; }
+        .live-indicator { color: #ff5252; font-weight: bold; animation: blink 1.5s infinite; font-size: 1rem;}
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+
+        .linescore-wrapper { width: 100%; overflow-x: auto; margin-bottom: 15px; background-color: #1a1a1a; border-radius: 8px; border: 1px solid #333; padding: 8px 0;}
+        .linescore-table { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.85rem; font-family: monospace;}
+        .linescore-table th, .linescore-table td { padding: 5px 4px; }
+        .linescore-table th { color: #888; font-weight: normal; border-bottom: 1px solid #333;}
+        .linescore-table td { color: #ddd; }
+        .linescore-table .team-col { text-align: left; padding-left: 10px; font-weight: bold; color: #bb86fc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;}
+        .linescore-table .total-col { background-color: #222; font-weight: bold; }
+        .linescore-table .total-runs { color: #fff; font-size: 1rem; }
+        .linescore-table .total-hits, .linescore-table .total-errors { color: #aaa; }
+
+        .pbp-container { background-color: #1a1a1a; border: 1px solid #333; border-left: 4px solid #ff5252; padding: 12px; border-radius: 8px; font-size: 0.95rem; line-height: 1.5; margin-bottom: 15px;}
+        .pbp-label { color: #ff5252; font-weight: bold; margin-bottom: 8px; font-size: 0.85rem; border-bottom: 1px solid #333; padding-bottom: 4px; }
+        .pbp-text { color: #e0e0e0; display: flex; align-items: flex-start; gap: 6px; }
+        .pbp-text.old-play { color: #888; font-size: 0.85rem; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #333; }
+
+        .live-details { display: flex; justify-content: space-between; align-items: center; background-color: #2a2a2a; border-radius: 10px; padding: 12px 15px; font-size: 0.95rem; margin-bottom: 15px;}
+        .field-status { display: flex; align-items: center; gap: 15px; }
+        .bases { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .base-row { display: flex; gap: 16px; }
+        .base { width: 14px; height: 14px; background-color: #444; transform: rotate(45deg); border: 1px solid #222; }
+        .base.active { background-color: #ffeb3b; box-shadow: 0 0 8px rgba(255, 235, 59, 0.6); }
+        .count { display: flex; flex-direction: column; font-family: monospace; font-size: 1.1rem; color: #ccc;}
+        .count span { font-weight: bold; }
+        .c-balls { color: #4caf50; } .c-strikes { color: #ff5252; } .c-outs { color: #ff9800; }    
+        .player-info { display: flex; flex-direction: column; gap: 6px; width: 60%; }
+        .player-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #444; padding-bottom: 3px; }
+        .player-row:last-child { border-bottom: none; }
+        .label { color: #888; font-size: 0.85rem; }
+        .name { color: #fff; font-weight: bold; text-align: right; width: 75%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+
+        .lineup-container { display: flex; justify-content: space-between; background-color: #1a1a1a; padding: 12px; border-radius: 8px; border: 1px solid #333;}
+        .team-lineup { width: 48%; }
+        .team-lineup h4 { margin: 0 0 10px 0; color: #bb86fc; text-align: center; border-bottom: 1px solid #444; padding-bottom: 6px; font-size: 0.95rem;}
+        .lineup-item { display: flex; gap: 8px; margin-bottom: 6px; align-items: center;}
+        .bat-num { color: #888; width: 18px; text-align: right; font-family: monospace; font-size: 0.9rem;}
+        .bat-name { color: #ccc; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        
+        details.final-details-toggle { margin-top: 5px; background-color: #1e1e1e; border-radius: 8px; border: 1px solid #444; }
+        details.final-details-toggle summary { padding: 12px; cursor: pointer; color: #bb86fc; font-weight: bold; font-size: 0.95rem; text-align: center; list-style: none; user-select: none; -webkit-tap-highlight-color: transparent;}
+        details.final-details-toggle summary::-webkit-details-marker { display: none; } 
+        details.final-details-toggle[open] summary { border-bottom: 1px dashed #444; color: #aaa; }
+        .toggle-content { padding: 15px; display: flex; flex-direction: column; gap: 15px; }
+        .toggle-content .pbp-container, .toggle-content .lineup-container { margin-bottom: 0; } 
+
+        .tv-board { background: #0a0a0a; border: 2px solid #333; border-radius: 8px; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+        .tv-header { background: linear-gradient(90deg, #1a2a6c, #112952); color: white; text-align: center; padding: 8px; font-weight: bold; font-size: 0.95rem; border-bottom: 2px solid #444; letter-spacing: 1px;}
+        .tv-table { width: 100%; border-collapse: collapse; text-align: center; }
+        .tv-table td { border: 1px solid #222; padding: 8px 5px; font-size: 0.9rem; }
+        .tv-table .tv-label { background-color: #111; color: #bb86fc; font-weight: bold; width: 34%; border-left: 2px solid #333; border-right: 2px solid #333;}
+        .tv-table .tv-value { background-color: #1a1a1a; color: #fff; width: 33%; font-weight: bold; font-size: 1.05rem; }
+        .tv-decisions { background-color: #111; border-top: 2px solid #444; display: flex; flex-direction: column; }
+        .tv-dec-row { display: flex; border-bottom: 1px solid #222; }
+        .tv-dec-row:last-child { border-bottom: none; }
+        .tv-dec-label { width: 35%; padding: 6px; background: #1a1a1a; color: #888; text-align: center; font-size: 0.85rem; border-right: 1px solid #333;}
+        .tv-dec-name { width: 65%; padding: 6px 12px; color: #e0e0e0; font-size: 0.9rem; font-weight: bold; }
+
+        .loading { text-align: center; color: #888; font-size: 1.1rem; padding: 20px; width: 100%;}
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <h1 id="main-title">⚾ WBC 2026 戰情室 </h1>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        <div id="date-menu" class="date-menu"></div>
+    </div>
+    
+    <div id="games-container">
+        <div class="loading">正在連線取得即時賽況...</div>
+    </div>
+
+    <script>
+        const translateDict = {
+            "Chinese Taipei": "中華隊", "Japan": "日本", "Australia": "澳洲", "Czechia": "捷克", "Korea": "韓國", "Cuba": "古巴", "USA": "美國",
+            "Tzu-Chen Sha": "沙子宸", "Cheng-Yu Chang": "張政禹", "Tsung-Che Cheng": "鄭宗哲", "Kun-Yu Chiang": "江坤宇", "Lyle Lin": "林家正",
+            "Kazuma Okamoto": "岡本和真", "Munetaka Murakami": "村上宗隆", "Sosuke Genda": "源田壯亮", "Kenya Wakatsuki": "若月健矢", "Yoshinobu Yamamoto": "山本由伸",
+            "An-Ko Lin": "林安可", "Stuart Fairchild": "費爾查德", "Chieh-Hsien Chen": "陳傑憲", "Kungkuan Giljegiljaw": "吉力吉撈．鞏冠", "Nien-Ting Wu":"吳念庭", "Chen-Wei Chen":"陳晨威", "Yu Chang":"張育成",
+            "Hao-Chun Cheng": "鄭浩均", "Completed Early": "提前結束"
+        };
+        const translate = (name) => { if (!name) return "無資料"; return translateDict[name] || name; };
+
+        const translatePlay = (text) => {
+            if (!text) return "";
+            let translated = text;
+            translated = translated.replace('strikes out swinging', '揮棒落空遭三振').replace('strikes out called', '站著不動遭三振').replace('walks', '獲得保送').replace('singles', '擊出一壘安打').replace('doubles', '擊出二壘安打').replace('triples', '擊出三壘安打').replace('homers', '轟出全壘打').replace('grounds out', '擊出滾地球出局').replace('flies out', '擊出飛球出局').replace('pops out', '擊出內野高飛球出局').replace('lines out', '擊出平飛球出局').replace('second baseman', '二壘手').replace('first baseman', '一壘手').replace('third baseman', '三壘手').replace('shortstop', '游擊手').replace('pitcher', '投手').replace('catcher', '捕手').replace(' to ', ' 傳給 ').replace('steals', '成功盜上').replace('caught stealing', '盜壘失敗遭觸殺').replace('wild pitch', '發生暴投');
+            Object.keys(translateDict).forEach(engName => {
+                translated = translated.replace(new RegExp(engName, 'g'), translateDict[engName]);
+            });
+            return translated;
+        };
+
+        let currentSelectedDate = 'today'; 
+        const tournamentStartDate = new Date('2026-03-05'); 
+
+        function toggleMenu() {
+            const menu = document.getElementById('date-menu');
+            if (!menu.classList.contains('open')) {
+                buildMenu(); 
+            }
+            menu.classList.toggle('open');
+        }
+
+        function buildMenu() {
+            const menu = document.getElementById('date-menu');
+            menu.innerHTML = '';
+            const now = new Date();
+
+            const todayItem = document.createElement('div');
+            todayItem.className = `menu-item ${currentSelectedDate === 'today' ? 'active' : ''}`;
+            todayItem.innerText = '⭐ 今日最新賽程';
+            todayItem.onclick = () => selectDate('today');
+            menu.appendChild(todayItem);
+
+            const yesterday = new Date(now);
+            yesterday.setDate(yesterday.getDate() - 1);
+            yesterday.setHours(0, 0, 0, 0);
+            
+            let iterDate = new Date(yesterday);
+            tournamentStartDate.setHours(0, 0, 0, 0);
+
+            while (iterDate >= tournamentStartDate) {
+                const yyyy = iterDate.getFullYear();
+                const mm = String(iterDate.getMonth() + 1).padStart(2, '0');
+                const dd = String(iterDate.getDate()).padStart(2, '0');
+                const dateString = `${yyyy}-${mm}-${dd}`;
+                const displayString = `${iterDate.getMonth() + 1}月${iterDate.getDate()}日`;
+
+                const item = document.createElement('div');
+                item.className = `menu-item ${currentSelectedDate === dateString ? 'active' : ''}`;
+                item.innerText = `📅 ${displayString}`;
+                item.onclick = () => selectDate(dateString);
+                menu.appendChild(item);
+
+                iterDate.setDate(iterDate.getDate() - 1); 
+            }
+        }
+
+        function selectDate(dateVal) {
+            currentSelectedDate = dateVal;
+            document.getElementById('date-menu').classList.remove('open');
+            
+            const mainTitle = document.getElementById('main-title');
+            if (dateVal === 'today') {
+                // 這裡加上 By 老杜
+                mainTitle.innerText = '⚾ WBC 戰情室 By 老杜'; 
+            } else {
+                const parts = dateVal.split('-');
+                // 切換歷史賽程時，也要加上 By 老杜
+                mainTitle.innerText = `⚾ ${parseInt(parts[1])}/${parseInt(parts[2])} 賽果 By 老杜`; 
+            }
+
+            document.getElementById('games-container').innerHTML = '<div class="loading">正在載入賽事資料...</div>';
+            fetchWBCGames(); 
+        }
+
+        async function fetchWBCGames() {
+            const container = document.getElementById('games-container');
+            const isTodayMode = currentSelectedDate === 'today';
+            const targetDate = isTodayMode ? new Date() : new Date(currentSelectedDate);
+            
+            const fetchStart = new Date(targetDate); fetchStart.setDate(fetchStart.getDate() - 1);
+            const fetchEnd = new Date(targetDate); fetchEnd.setDate(fetchEnd.getDate() + 1);
+            const formatDate = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+            
+            const apiUrl = `https://statsapi.mlb.com/api/v1/schedule?sportId=51&hydrate=team,linescore,boxscore,decisions&startDate=${formatDate(fetchStart)}&endDate=${formatDate(fetchEnd)}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                if (!data.dates || data.dates.length === 0) { container.innerHTML = '<div class="loading">無賽程資料 🙇‍♂️</div>'; return; }
+
+                let allGames = [];
+                data.dates.forEach(dateObj => { allGames = allGames.concat(dateObj.games); });
+
+                const filteredGames = allGames.filter(game => {
+                    const gameTime = new Date(game.gameDate);
+                    const isTargetDate = gameTime.getDate() === targetDate.getDate() && gameTime.getMonth() === targetDate.getMonth();
+                    
+                    if (isTodayMode) {
+                        const isLiveNow = game.status.statusCode === 'I' || game.status.statusCode === 'PW';
+                        return isTargetDate || isLiveNow;
+                    } else {
+                        return isTargetDate;
+                    }
+                });
+
+                if (filteredGames.length === 0) { container.innerHTML = '<div class="loading">此日期無賽程資料 🙇‍♂️</div>'; return; }
+                
+                filteredGames.sort((a, b) => new Date(b.gameDate) - new Date(a.gameDate));
+
+                let liveGamesHtml = '';
+                let finalGamesHtml = '';
+
+                for (const game of filteredGames) {
+                    const awayTeam = translate(game.teams.away.team.name);
+                    const homeTeam = translate(game.teams.home.team.name);
+                    const awayScore = game.teams.away.score ?? '-';
+                    const homeScore = game.teams.home.score ?? '-';
+                    const statusCode = game.status.statusCode;
+                    const isLive = statusCode === 'I' || statusCode === 'PW';
+                    const inning = game.linescore ? `第 ${game.linescore.currentInning} 局 ${game.linescore.isTopInning ? '上' : '下'}` : '';
+                    
+                    const statusText = translate(game.status.detailedState);
+                    const statusHtml = isLive ? `<span class="live-indicator">LIVE</span><br><span style="font-size:1.05rem; margin-top:5px; display:inline-block;">${inning}</span>` : `<span>${statusText}</span>`;
+
+                    const gameTimeObj = new Date(game.gameDate);
+                    const timeString = `${gameTimeObj.getMonth() + 1}月${gameTimeObj.getDate()}日 ${String(gameTimeObj.getHours()).padStart(2, '0')}:${String(gameTimeObj.getMinutes()).padStart(2, '0')}`;
+
+                    let linescoreTableHtml = '';
+                    let liveDetailsHtml = '';
+                    let pbpTextHtml = '';
+                    let lineupHtml = '';
+                    let tvBoardHtml = '';
+                    let liveDataBoxscore = null; 
+
+                    if (game.linescore && game.linescore.innings && game.linescore.innings.length > 0) {
+                        const ls = game.linescore;
+                        const maxInnings = Math.max(9, ls.currentInning || 9);
+                        let headerRow = '<th></th>';
+                        let awayRow = `<td class="team-col">${awayTeam}</td>`;
+                        let homeRow = `<td class="team-col">${homeTeam}</td>`;
+
+                        for (let i = 1; i <= maxInnings; i++) {
+                            headerRow += `<th>${i}</th>`;
+                            const inn = ls.innings.find(x => x.num === i);
+                            const awayRuns = inn && inn.away && inn.away.runs !== undefined ? inn.away.runs : '';
+                            const homeRuns = inn && inn.home && inn.home.runs !== undefined ? inn.home.runs : '';
+                            awayRow += `<td>${awayRuns}</td>`;
+                            homeRow += `<td>${homeRuns}</td>`;
+                        }
+
+                        headerRow += '<th class="total-col" style="padding-left:10px;">R</th><th class="total-col">H</th><th class="total-col">E</th>';
+                        awayRow += `<td class="total-col total-runs" style="padding-left:10px;">${ls.teams.away.runs ?? '-'}</td><td class="total-col total-hits">${ls.teams.away.hits ?? '-'}</td><td class="total-col total-errors">${ls.teams.away.errors ?? '-'}</td>`;
+                        homeRow += `<td class="total-col total-runs" style="padding-left:10px;">${ls.teams.home.runs ?? '-'}</td><td class="total-col total-hits">${ls.teams.home.hits ?? '-'}</td><td class="total-col total-errors">${ls.teams.home.errors ?? '-'}</td>`;
+
+                        linescoreTableHtml = `<div class="linescore-wrapper"><table class="linescore-table"><thead><tr>${headerRow}</tr></thead><tbody><tr>${awayRow}</tr><tr>${homeRow}</tr></tbody></table></div>`;
+                    }
+
+                    try {
+                        const liveRes = await fetch(`https://statsapi.mlb.com/api/v1.1/game/${game.gamePk}/feed/live`);
+                        const liveData = await liveRes.json();
+                        
+                        let playDescs = [];
+                        const allPlays = liveData.liveData?.plays?.allPlays || [];
+                        for (let i = allPlays.length - 1; i >= 0; i--) {
+                            if (allPlays[i].result?.description) {
+                                playDescs.push(allPlays[i].result.description);
+                                if (playDescs.length === 2) break; 
+                            }
+                        }
+
+                        if (playDescs.length > 0) {
+                            let pbpContent = '';
+                            if (isLive) {
+                                pbpContent += `<div class="pbp-text"><span style="color:#ff5252; animation: blink 1.5s infinite;">●</span> <span>${translatePlay(playDescs[0])}</span></div>`;
+                                if (playDescs.length > 1) {
+                                    pbpContent += `<div class="pbp-text old-play"><span style="color:#888;">○</span> <span>${translatePlay(playDescs[1])}</span></div>`;
+                                }
+                                pbpTextHtml = `<div class="pbp-container"><div class="pbp-label">最新賽況轉播</div>${pbpContent}</div>`;
+                            } else {
+                                pbpContent += `<div class="pbp-text"><span>💬</span> <span>${translatePlay(playDescs[0])}</span></div>`;
+                                if (playDescs.length > 1) {
+                                    pbpContent += `<div class="pbp-text old-play"><span>💬</span> <span>${translatePlay(playDescs[1])}</span></div>`;
+                                }
+                                pbpTextHtml = `<div class="pbp-container"><div class="pbp-label" style="color:#aaa;">最終賽況紀錄</div>${pbpContent}</div>`;
+                            }
+                        }
+                        liveDataBoxscore = liveData.liveData?.boxscore;
+                    } catch (e) { console.error('PBP Error:', e); }
+
+                    if (isLive && game.linescore) {
+                        const ls = game.linescore, off = ls.offense || {}, def = ls.defense || {};
+                        const b1 = off.first ? 'active' : '', b2 = off.second ? 'active' : '', b3 = off.third ? 'active' : '';
+                        liveDetailsHtml = `<div class="live-details"><div class="field-status"><div class="bases"><div class="base second ${b2}"></div><div class="base-row"><div class="base third ${b3}"></div><div class="base first ${b1}"></div></div></div><div class="count"><div class="c-balls">B <span>${ls.balls || 0}</span></div><div class="c-strikes">S <span>${ls.strikes || 0}</span></div><div class="c-outs">O <span>${ls.outs || 0}</span></div></div></div><div class="player-info"><div class="player-row"><span class="label">⚾ 投手</span> <span class="name">${translate(def.pitcher?.fullName)}</span></div><div class="player-row"><span class="label">🏏 打者</span> <span class="name">${translate(off.batter?.fullName)}</span></div><div class="player-row"><span class="label">⏳ 下位</span> <span class="name">${translate(off.onDeck?.fullName || '準備中')}</span></div></div></div>`;
+                    }
+
+                    const boxscoreToUse = liveDataBoxscore || game.boxscore;
+                    if (boxscoreToUse) {
+                        const getLineup = (teamBox) => {
+                            if (!teamBox) return [];
+                            let order = (teamBox.battingOrder && teamBox.battingOrder.length > 0) ? teamBox.battingOrder : (teamBox.batters || []);
+                            return order.map(id => {
+                                const p = teamBox.players['ID' + id];
+                                return p ? (p.person?.fullName || p.fullName) : '';
+                            }).filter(n => n !== '').slice(0, 9);
+                        };
+                        
+                        const awayLineup = getLineup(boxscoreToUse.teams?.away);
+                        const homeLineup = getLineup(boxscoreToUse.teams?.home);
+
+                        if (awayLineup.length > 0 && homeLineup.length > 0) {
+                            let awayList = '', homeList = '';
+                            for(let i=0; i<9; i++) {
+                                const aName = awayLineup[i] ? translate(awayLineup[i]) : '-';
+                                const hName = homeLineup[i] ? translate(homeLineup[i]) : '-';
+                                awayList += `<div class="lineup-item"><span class="bat-num">${i+1}.</span><span class="bat-name">${aName}</span></div>`;
+                                homeList += `<div class="lineup-item"><span class="bat-num">${i+1}.</span><span class="bat-name">${hName}</span></div>`;
+                            }
+                            lineupHtml = `<div class="lineup-container"><div class="team-lineup"><h4>${awayTeam}</h4>${awayList}</div><div class="team-lineup"><h4>${homeTeam}</h4>${homeList}</div></div>`;
+                        }
+
+                        if (!isLive) {
+                            const aStats = boxscoreToUse.teams?.away?.teamStats || {};
+                            const hStats = boxscoreToUse.teams?.home?.teamStats || {};
+                            const dec = game.decisions || {};
+                            const getStat = (team, cat, stat) => team && team[cat] && team[cat][stat] !== undefined ? team[cat][stat] : 0;
+                            
+                            const aHits = getStat(aStats, 'batting', 'hits'), hHits = getStat(hStats, 'batting', 'hits');
+                            const aHR = getStat(aStats, 'batting', 'homeRuns'), hHR = getStat(hStats, 'batting', 'homeRuns');
+                            const aK = getStat(aStats, 'batting', 'strikeOuts'), aBB = getStat(aStats, 'batting', 'baseOnBalls');
+                            const hK = getStat(hStats, 'batting', 'strikeOuts'), hBB = getStat(hStats, 'batting', 'baseOnBalls');
+                            const aErr = getStat(aStats, 'fielding', 'errors'), hErr = getStat(hStats, 'fielding', 'errors');
+                            const aLOB = game.linescore?.teams?.away?.leftOnBase ?? 0, hLOB = game.linescore?.teams?.home?.leftOnBase ?? 0;
+
+                            const wp = dec.winner ? translate(dec.winner.fullName) : '無', lp = dec.loser ? translate(dec.loser.fullName) : '無', sv = dec.save ? translate(dec.save.fullName) : null; 
+
+                            tvBoardHtml = `
+                                <div class="tv-board">
+                                    <div class="tv-header">📊 賽事最終結果</div>
+                                    <table class="tv-table">
+                                        <tr><td class="tv-value" style="color:#fff;">${awayTeam}</td><td class="tv-label">隊 伍</td><td class="tv-value" style="color:#fff;">${homeTeam}</td></tr>
+                                        <tr><td class="tv-value">${aHits}</td><td class="tv-label">安 打</td><td class="tv-value">${hHits}</td></tr>
+                                        <tr><td class="tv-value">${aHR}</td><td class="tv-label">全壘打</td><td class="tv-value">${hHR}</td></tr>
+                                        <tr><td class="tv-value">${aK}-${aBB}</td><td class="tv-label">三振-保送</td><td class="tv-value">${hK}-${hBB}</td></tr>
+                                        <tr><td class="tv-value">${aLOB}</td><td class="tv-label">殘 壘</td><td class="tv-value">${hLOB}</td></tr>
+                                        <tr><td class="tv-value">${aErr}</td><td class="tv-label">失 誤</td><td class="tv-value">${hErr}</td></tr>
+                                    </table>
+                                    <div class="tv-decisions">
+                                        <div class="tv-dec-row"><div class="tv-dec-label">勝利投手</div><div class="tv-dec-name">${wp}</div></div>
+                                        <div class="tv-dec-row"><div class="tv-dec-label">敗戰投手</div><div class="tv-dec-name">${lp}</div></div>
+                                        ${sv ? `<div class="tv-dec-row"><div class="tv-dec-label">救援成功</div><div class="tv-dec-name">${sv}</div></div>` : ''}
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }
+
+                    let extraInfoHtml = '';
+                    if (isLive) {
+                        extraInfoHtml = `${pbpTextHtml}${liveDetailsHtml}${lineupHtml}`;
+                    } else {
+                        if (tvBoardHtml || pbpTextHtml || lineupHtml) {
+                            extraInfoHtml = `<details class="final-details-toggle"><summary>🔽 展開對戰結果與詳細賽況</summary><div class="toggle-content">${tvBoardHtml}${pbpTextHtml}${lineupHtml}</div></details>`;
+                        }
+                    }
+
+                    const cardHtml = `
+                        <div class="game-card">
+                            <div class="game-date-badge">📅 ${timeString}</div>
+                            <div class="score-board">
+                                <div class="team-box"><div class="team-name">${awayTeam}</div><div class="score">${awayScore}</div></div>
+                                <div class="game-status">${statusHtml}</div>
+                                <div class="team-box"><div class="team-name">${homeTeam}</div><div class="score">${homeScore}</div></div>
+                            </div>
+                            ${linescoreTableHtml}
+                            ${extraInfoHtml}
+                        </div>
+                    `;
+
+                    if (isLive) liveGamesHtml += cardHtml;
+                    else finalGamesHtml += cardHtml;
+                }
+                
+                container.innerHTML = (liveGamesHtml + finalGamesHtml) || '<div class="loading">此日期無賽程資料</div>';
+
+            } catch (error) { console.error('API Error:', error); container.innerHTML = '<div class="loading">連線失敗，請檢查網路狀態。</div>'; }
+        }
+
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('date-menu');
+            const btn = document.querySelector('.menu-btn');
+            if (!menu.contains(event.target) && event.target !== btn && menu.classList.contains('open')) {
+                menu.classList.remove('open');
+            }
+        });
+
+        fetchWBCGames();
+        
+        setInterval(() => {
+            if (currentSelectedDate === 'today') {
+                fetchWBCGames();
+            }
+        }, 3000); 
+    </script>
+</body>
+</html>

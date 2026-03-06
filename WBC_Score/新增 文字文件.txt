@@ -1,0 +1,5 @@
+const translateDict = {
+            "Chinese Taipei": "中華隊", "Japan": "日本", "Australia": "澳洲", "Czechia": "捷克", "Korea": "韓國", "Cuba": "古巴", "USA": "美國",
+            "Tzu-Chen Sha": "沙子宸", "Cheng-Yu Chang": "張政禹", "Tsung-Che Cheng": "鄭宗哲", "Kun-Yu Chiang": "江坤宇", "Lyle Lin": "林家正",
+            "Kazuma Okamoto": "岡本和真", "Munetaka Murakami": "村上宗隆", "Sosuke Genda": "源田壯亮", "Kenya Wakatsuki": "若月健矢", "Yoshinobu Yamamoto": "山本由伸",
+            "An-Ko Lin": "林安可", "Stuart Fairchild": "費爾查德", "Chieh-Hsien Chen": "陳傑憲", "Kungkuan Giljegiljaw": "吉力吉撈．鞏冠", "Nien-Ting Wu":"吳念庭", "Chen-Wei Chen":"陳晨威", "Yu Chang":"張育成"
