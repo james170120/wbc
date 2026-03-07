@@ -311,7 +311,50 @@
             "Omar Mendoza": "門多薩", "Juan Montes": "蒙特斯", "Ismael Munguia": "蒙吉亞",
             "Cristhian Sandoval": "桑多瓦"
         };
-        const translate = (name) => { if (!name) return "無資料"; return translateDict[name] || name; };
+
+        // 🌟 n8n Webhook 網址 (請換成你 n8n 的 Production URL) 🌟
+        const N8N_WEBHOOK_URL = "https://james15211521.zeabur.app/webhook/report-wbc-words"; 
+
+        // 讀取瀏覽器裡「已經通報過」的單字記憶 (避免重新整理後重複發送)
+        let reportedWords = new Set(JSON.parse(localStorage.getItem('reportedWbcWords') || '[]'));
+        let pendingReport = new Set(); // 這次抓到準備要通報的新單字
+
+        const translate = (name) => { 
+            if (!name) return "無資料"; 
+            
+            // 1. 如果巨無霸字典裡有，直接給中文
+            if (translateDict[name]) {
+                return translateDict[name];
+            } 
+            
+            // 2. 如果字典沒有，且「這支手機之前沒通報過」，就加進待通報清單
+            if (!reportedWords.has(name) && !pendingReport.has(name)) {
+                pendingReport.add(name);
+            }
+            
+            return name; // 畫面上還是先顯示英文
+        };
+
+        // 🌟 批次傳送未知單字給 n8n 的函數 🌟
+        function reportUnknownWords() {
+            if (pendingReport.size === 0) return; // 沒有新單字就不理他
+
+            const wordsToReport = Array.from(pendingReport);
+            pendingReport.clear(); // 清空暫存清單
+
+            console.log("📝 發現未翻譯單字！正在發送給 n8n 記錄進 Google Sheets:", wordsToReport);
+
+            // 用「射後不理」的方式丟給 n8n，不影響網頁運作
+            fetch(N8N_WEBHOOK_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ words: wordsToReport })
+            }).catch(e => console.error("通報失敗:", e));
+
+            // 把這些字加進「已通報」的記憶體裡，並存入瀏覽器
+            wordsToReport.forEach(w => reportedWords.add(w));
+            localStorage.setItem('reportedWbcWords', JSON.stringify(Array.from(reportedWords)));
+        }
 
         const translatePlay = (text) => {
             if (!text) return "";
@@ -608,6 +651,8 @@
                 }
                 
                 container.innerHTML = (liveGamesHtml + finalGamesHtml) || '<div class="loading">此日期無賽程資料</div>';
+         // 👇 新增這行：畫面更新完後，把沒看過的單字批次送給 n8n
+                reportUnknownWords();
 
             } catch (error) { console.error('API Error:', error); container.innerHTML = '<div class="loading">連線失敗，請檢查網路狀態。</div>'; }
         }
