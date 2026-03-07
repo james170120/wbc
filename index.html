@@ -67,11 +67,14 @@
         .count { display: flex; flex-direction: column; font-family: monospace; font-size: 1.1rem; color: #ccc;}
         .count span { font-weight: bold; }
         .c-balls { color: #4caf50; } .c-strikes { color: #ff5252; } .c-outs { color: #ff9800; }    
-        .player-info { display: flex; flex-direction: column; gap: 6px; width: 60%; }
-        .player-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #444; padding-bottom: 3px; }
+        
+        /* 👇 這裡幫你把排版修好了，保證不斷字 👇 */
+        .player-info { display: flex; flex-direction: column; gap: 6px; width: 62%; }
+        .player-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #444; padding-bottom: 3px; }
         .player-row:last-child { border-bottom: none; }
-        .label { color: #888; font-size: 0.85rem; }
-        .name { color: #fff; font-weight: bold; text-align: right; width: 75%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .label { color: #888; font-size: 0.85rem; white-space: nowrap; flex-shrink: 0; }
+        .name { color: #fff; font-weight: bold; text-align: right; flex-grow: 1; margin-left: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        /* 👆 排版修正結束 👆 */
 
         .lineup-container { display: flex; justify-content: space-between; background-color: #1a1a1a; padding: 12px; border-radius: 8px; border: 1px solid #333;}
         .team-lineup { width: 48%; }
@@ -506,7 +509,10 @@
                     if (isLive && game.linescore) {
                         const ls = game.linescore, off = ls.offense || {}, def = ls.defense || {};
                         const b1 = off.first ? 'active' : '', b2 = off.second ? 'active' : '', b3 = off.third ? 'active' : '';
-                        liveDetailsHtml = `<div class="live-details"><div class="field-status"><div class="bases"><div class="base second ${b2}"></div><div class="base-row"><div class="base third ${b3}"></div><div class="base first ${b1}"></div></div></div><div class="count"><div class="c-balls">B <span>${ls.balls || 0}</span></div><div class="c-strikes">S <span>${ls.strikes || 0}</span></div><div class="c-outs">O <span>${ls.outs || 0}</span></div></div></div><div class="player-info"><div class="player-row"><span class="label">⚾ 投手</span> <span class="name">${translate(def.pitcher?.fullName)}</span></div><div class="player-row"><span class="label">🏏 打者</span> <span class="name">${translate(off.batter?.fullName)}</span></div><div class="player-row"><span class="label">⏳ 下位</span> <span class="name">${translate(off.onDeck?.fullName || '準備中')}</span></div></div></div>`;
+                        
+                        // 👇 這裡幫你把圖示換成 🖐🏽 投手, 🏏 打者, 🔜 下位 了！ 👇
+                        liveDetailsHtml = `<div class="live-details"><div class="field-status"><div class="bases"><div class="base second ${b2}"></div><div class="base-row"><div class="base third ${b3}"></div><div class="base first ${b1}"></div></div></div><div class="count"><div class="c-balls">B <span>${ls.balls || 0}</span></div><div class="c-strikes">S <span>${ls.strikes || 0}</span></div><div class="c-outs">O <span>${ls.outs || 0}</span></div></div></div><div class="player-info"><div class="player-row"><span class="label">🖐🏽 投手</span> <span class="name">${translate(def.pitcher?.fullName)}</span></div><div class="player-row"><span class="label">🏏 打者</span> <span class="name">${translate(off.batter?.fullName)}</span></div><div class="player-row"><span class="label">🔜 下位</span> <span class="name">${translate(off.onDeck?.fullName || '準備中')}</span></div></div></div>`;
+                        // 👆 圖示修改結束 👆
                     }
 
                     const boxscoreToUse = liveDataBoxscore || game.boxscore;
