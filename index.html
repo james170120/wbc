@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>⚾WBC 2026戰情室 By老杜</title>
+    <title>⚾ WBC 戰情室</title>
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -13,12 +13,14 @@
     <link rel="icon" href="icon.png">
 
     <meta property="og:title" content="⚾ 2026 WBC 專屬即時戰情室">
-    <meta property="og:description" content="零時差掌握 2026 世界棒球經典賽！即時比分、文字轉播、先發打線與賽後戰報，By 老杜。">
-    <meta property="og:image" content="https://james170120.github.io/wbc/share.jpg"> <meta property="og:type" content="website">
+    <meta property="og:description" content="零時差掌握 2026 世界棒球經典賽！即時比分、文字轉播、先發打線與賽後戰報，完全免費無廣告。">
+    <meta property="og:image" content="https://你的專屬網址.netlify.app/share.jpg"> <meta property="og:type" content="website">
+
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #121212; color: #ffffff; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; overscroll-behavior-y: none;}
         
         .header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 600px; position: relative; margin-bottom: 20px;}
+        /* 這裡加上 padding: 0 45px 讓標題不會撞到按鈕 */
         h1 { color: #e0e0e0; font-size: 1.45rem; margin: 0; flex-grow: 1; text-align: center; letter-spacing: 1px; padding: 0 45px; line-height: 1.3;}
         .menu-btn { background: none; border: none; color: #e0e0e0; font-size: 1.8rem; cursor: pointer; padding: 5px; position: absolute; right: 0; outline: none; -webkit-tap-highlight-color: transparent;}
         .date-menu { position: absolute; top: 45px; right: 0; background-color: #1e1e1e; border: 1px solid #444; border-radius: 8px; box-shadow: 0 8px 16px rgba(0,0,0,0.8); display: none; flex-direction: column; z-index: 100; overflow: hidden; min-width: 180px;}
@@ -102,7 +104,7 @@
 <body>
 
     <div class="header-container">
-        <h1 id="main-title">⚾WBC 2026戰情室 By老杜 </h1>
+        <h1 id="main-title">⚾ WBC 戰情室 By 老杜</h1>
         <button class="menu-btn" onclick="toggleMenu()">☰</button>
         <div id="date-menu" class="date-menu"></div>
     </div>
@@ -112,19 +114,14 @@
     </div>
 
     <script>
-            // 🌟 2026 WBC 終極巨無霸中英對照大辭典 (Yusaku 專屬版) 🌟
+        // 🌟 2026 WBC 終極巨無霸中英對照大辭典 (Yusaku 專屬版) 🌟
         const translateDict = {
-            // ================= 國家隊名稱 =================
             "Chinese Taipei": "中華隊", "Japan": "日本", "Australia": "澳洲", "Czechia": "捷克", "Korea": "韓國", 
             "Cuba": "古巴", "USA": "美國", "Venezuela": "委內瑞拉", "Kingdom of the Netherlands": "荷蘭", 
             "Netherlands": "荷蘭", "Puerto Rico": "波多黎各", "Dominican Republic": "多明尼加", "Mexico": "墨西哥",
             "Canada": "加拿大", "Great Britain": "英國", "Italy": "義大利", "Panama": "巴拿馬", "Colombia": "哥倫比亞",
-
-            // ================= 比賽狀態與術語 =================
             "Completed Early": "提前結束", "Final": "比賽結束", "In Progress": "進行中", "Warmup": "賽前熱身", "Scheduled": "即將開打",
             "Postponed": "比賽延期", "Suspended": "保留比賽", "Delayed": "比賽延遲",
-
-            // ================= 🇹🇼 中華隊 (Chinese Taipei) =================
             "Tzu-Chen Sha": "沙子宸", "Cheng-Yu Chang": "張政禹", "Tsung-Che Cheng": "鄭宗哲", "Kun-Yu Chiang": "江坤宇", 
             "Lyle Lin": "林家正", "An-Ko Lin": "林安可", "Stuart Fairchild": "費爾查德", "Chieh-Hsien Chen": "陳傑憲", 
             "Kungkuan Giljegiljaw": "吉力吉撈．鞏冠", "Nien-Ting Wu": "吳念庭", "Chen-Wei Chen": "陳晨威", 
@@ -132,8 +129,6 @@
             "Po-Jung Wang": "王柏融", "Ching-Yu Kuo": "郭俊麟", "Teng-Yao Chu": "朱登耀", "Chia-Hao Sung": "宋家豪",
             "Chih-Hao Chang": "張志豪", "Wei-Chen Wang": "王威晨", "Kai-Wei Teng": "鄧愷威", "C.C. Lee": "李振昌",
             "Wei-Chung Wang": "王維中", "Shao-Ching Chiang": "江少慶", "Tzu-Wei Lin": "林子偉", "Kuan-Yu Chen": "陳冠宇",
-
-            // ================= 🇯🇵 日本武士隊 (Japan) =================
             "Shohei Ohtani": "大谷翔平", "Yoshinobu Yamamoto": "山本由伸", "Roki Sasaki": "佐佐木朗希", 
             "Munetaka Murakami": "村上宗隆", "Kazuma Okamoto": "岡本和真", "Sosuke Genda": "源田壯亮", 
             "Kenya Wakatsuki": "若月健矢", "Yu Darvish": "達比修有", "Seiya Suzuki": "鈴木誠也", 
@@ -141,40 +136,26 @@
             "Kensuke Kondoh": "近藤健介", "Shugo Maki": "牧秀悟", "Koudai Senga": "千賀滉大", 
             "Taisei Ota": "大勢", "Hiroto Takahashi": "高橋宏斗", "Shinnosuke Ogasawara": "小笠原慎之介",
             "Tetsuto Yamada": "山田哲人", "Hotaka Yamakawa": "山川穗高", "Ukyo Shuto": "周東佑京",
-
-            // ================= 🇺🇸 美國隊 (USA) =================
             "Mike Trout": "楚奧特", "Mookie Betts": "貝茲", "Freddie Freeman": "弗里曼", "Aaron Judge": "賈吉",
             "Bryce Harper": "哈波", "Trea Turner": "透納", "Paul Goldschmidt": "高施密特", "Nolan Arenado": "亞瑞納多", 
             "Kyle Tucker": "塔克", "J.T. Realmuto": "瑞爾穆托", "Devin Williams": "威廉斯", "Pete Alonso": "阿隆索",
             "Bobby Witt Jr.": "小威特", "Gerrit Cole": "柯爾", "Zack Wheeler": "惠勒", "Corbin Carroll": "卡洛爾",
-
-            // ================= 🇰🇷 韓國隊 (Korea) =================
             "Ha-Seong Kim": "金河成", "Jung Hoo Lee": "李政厚", "Baekho Kang": "姜白虎", "Tommy Edman": "艾德曼", 
             "Kwang Hyun Kim": "金廣鉉", "Woo-Suk Go": "高佑錫", "Eui-ji Yang": "梁義智", "Hyun-Soo Kim": "金賢洙",
             "Jeong Choi": "崔廷", "Chang-mo Koo": "具昌模",
-
-            // ================= 🇩🇴 多明尼加 (Dominican Republic) =================
             "Juan Soto": "索托", "Manny Machado": "馬查多", "Vladimir Guerrero Jr.": "小葛雷諾", "Rafael Devers": "德佛斯", 
             "Julio Rodríguez": "J.羅德里奎茲", "Julio Rodriguez": "J.羅德里奎茲", "Sandy Alcantara": "阿坎塔拉", 
             "Jeremy Peña": "潘尼亞", "Jeremy Pena": "潘尼亞", "Fernando Tatis Jr.": "小塔提斯", "Teoscar Hernández": "赫南德茲",
             "Teoscar Hernandez": "赫南德茲", "Emmanuel Clase": "克拉塞", "Framber Valdez": "瓦德茲",
-
-            // ================= 🇻🇪 委內瑞拉 (Venezuela) =================
             "Willson Contreras": "康崔拉斯", "Ronald Acuña Jr.": "阿庫尼亞", "Ronald Acuna Jr.": "阿庫尼亞",
             "Luis Arraez": "阿拉厄茲", "Salvador Perez": "培瑞茲", "Jose Altuve": "奧圖維", "Andres Gimenez": "吉曼尼茲",
             "Pablo López": "羅培茲", "Pablo Lopez": "羅培茲", "Gleyber Torres": "托雷斯", "Wilyer Abreu": "阿布瑞尤",
-
-            // ================= 🇳🇱 荷蘭隊 (Netherlands) =================
             "Xander Bogaerts": "波格茲", "Kenley Jansen": "簡森", "Jurickson Profar": "普羅法", 
             "Didi Gregorius": "葛雷格里斯", "Jonathan Schoop": "史構普", "Wladimir Balentien": "巴倫汀",
             "Chadwick Tromp": "川普", "Ray-Patrick Didder": "迪德",
-
-            // ================= 🇵🇷 波多黎各 (Puerto Rico) =================
             "Francisco Lindor": "林多", "Carlos Correa": "柯瑞亞", "Javier Báez": "巴耶茲", "Javier Baez": "巴耶茲",
             "Edwin Díaz": "狄亞茲", "Edwin Diaz": "狄亞茲", "Marcus Stroman": "史卓曼", "José Berríos": "貝里歐斯",
             "Jose Berrios": "貝里歐斯",
-
-            // ================= 🇨🇺 古巴 (Cuba) & 其他 =================
             "Luis Robert Jr.": "羅伯特", "Yoán Moncada": "蒙卡達", "Yoan Moncada": "蒙卡達", "Randy Arozarena": "阿羅薩雷納",
             "Liván Moinelo": "莫伊內洛", "Livan Moinelo": "莫伊內洛", "Raidel Martinez": "馬丁尼茲",
             "Martin Muzik": "穆吉克", "Martin Cervinka": "切爾文卡", "Robbie Glendinning": "葛蘭丁寧", "Antwone Kelly": "凱利"
@@ -243,12 +224,10 @@
             
             const mainTitle = document.getElementById('main-title');
             if (dateVal === 'today') {
-                // 這裡加上 By 老杜
-                mainTitle.innerText = '⚾ WBC 戰情室 By 老杜'; 
+                mainTitle.innerText = '⚾ WBC 戰情室 By 老杜';
             } else {
                 const parts = dateVal.split('-');
-                // 切換歷史賽程時，也要加上 By 老杜
-                mainTitle.innerText = `⚾ ${parseInt(parts[1])}/${parseInt(parts[2])} 賽果 By 老杜`; 
+                mainTitle.innerText = `⚾ ${parseInt(parts[1])}/${parseInt(parts[2])} 賽果 By 老杜`;
             }
 
             document.getElementById('games-container').innerHTML = '<div class="loading">正在載入賽事資料...</div>';
@@ -257,6 +236,11 @@
 
         async function fetchWBCGames() {
             const container = document.getElementById('games-container');
+            
+            // 💡 老爸的魔法記憶卡：在覆蓋畫面之前，先抄下目前哪些選單是打開的！
+            const currentlyOpenGamePks = Array.from(document.querySelectorAll('details.final-details-toggle[open]'))
+                                             .map(d => d.getAttribute('data-gamepk'));
+
             const isTodayMode = currentSelectedDate === 'today';
             const targetDate = isTodayMode ? new Date() : new Date(currentSelectedDate);
             
@@ -442,7 +426,11 @@
                         extraInfoHtml = `${pbpTextHtml}${liveDetailsHtml}${lineupHtml}`;
                     } else {
                         if (tvBoardHtml || pbpTextHtml || lineupHtml) {
-                            extraInfoHtml = `<details class="final-details-toggle"><summary>🔽 展開對戰結果與詳細賽況</summary><div class="toggle-content">${tvBoardHtml}${pbpTextHtml}${lineupHtml}</div></details>`;
+                            // 💡 老爸的魔法記憶卡：如果這個 gamePk 剛剛有被抄下來，就幫它加上 'open' 屬性！
+                            const isOpen = currentlyOpenGamePks.includes(String(game.gamePk)) ? 'open' : '';
+                            
+                            // 加上 data-gamepk 屬性，讓程式認得這是哪一場比賽
+                            extraInfoHtml = `<details class="final-details-toggle" data-gamepk="${game.gamePk}" ${isOpen}><summary>🔽 展開對戰結果與詳細賽況</summary><div class="toggle-content">${tvBoardHtml}${pbpTextHtml}${lineupHtml}</div></details>`;
                         }
                     }
 
