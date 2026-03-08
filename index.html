@@ -540,7 +540,7 @@
 
                     if (game.linescore && game.linescore.innings && game.linescore.innings.length > 0) {
                         const ls = game.linescore;
-                        const maxInnings = Math.max(9, ls.currentInning || 9);
+                        const maxInnings = Math.max(9, ls.currentInning || 9, ls.innings.length);
                         let headerRow = '<th></th>';
                         let awayRow = `<td class="team-col">${awayTeam}</td>`;
                         let homeRow = `<td class="team-col">${homeTeam}</td>`;
@@ -719,6 +719,7 @@
 </body>
 
 </html>
+
 
 
 
