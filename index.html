@@ -108,11 +108,70 @@
         .tv-dec-name { width: 65%; padding: 6px 12px; color: #e0e0e0; font-size: 0.9rem; font-weight: bold; }
 
         .loading { text-align: center; color: #888; font-size: 1.1rem; padding: 20px; width: 100%;}
+        /* 🚀 彈幕系統專屬樣式 🚀 */
+        #danmaku-container {
+            position: fixed;
+            top: 60px; /* 從標題下方開始 */
+            left: 0;
+            width: 100vw;
+            height: 40vh; /* 佔據畫面上半部 40% 的空間 */
+            pointer-events: none; /* 🌟 超重要：讓滑鼠點擊穿透，才不會擋住底下的按鈕 */
+            z-index: 9999;
+            overflow: hidden;
+        }
+        .danmaku-item {
+            position: absolute;
+            white-space: nowrap;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(0,0,0,0.8);
+            animation: fly-left linear forwards;
+            will-change: transform;
+        }
+        @keyframes fly-left {
+            from { transform: translateX(100vw); }
+            to { transform: translateX(-150%); } /* 確保完全飛出左邊畫面 */
+        }
+        /* 彈幕發射台 UI */
+        .danmaku-input-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .danmaku-input {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: 1px solid #444;
+            background-color: #1a1a1a;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        .danmaku-input:focus { border-color: #bb86fc; }
+        .danmaku-btn {
+            background-color: #bb86fc;
+            color: #121212;
+            border: none;
+            padding: 0 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
     <div class="header-container">
+        <div class="danmaku-input-container">
+        <input type="text" id="danmaku-text" class="danmaku-input" placeholder="輸入彈幕幫中華隊加油..." maxlength="30">
+        <button class="danmaku-btn" onclick="shootDanmaku()">發射</button>
+    </div>
+
+    <div id="danmaku-container"></div>
         <h1 id="main-title"><img src="wbc-logo.png" alt="WBC" class="title-logo">WBC 戰情室 By 老杜</h1>
         <button class="menu-btn" onclick="toggleMenu()">☰</button>
         <div id="date-menu" class="date-menu"></div>
@@ -753,9 +812,87 @@
                 fetchWBCGames();
             }
         }, 5000); 
+        // ================= 🚀 彈幕引擎系統 🚀 =================
+        
+        // 內建熱血罐頭彈幕庫
+        const defaultDanmakus = [
+            "中華隊加油！🇹🇼", "安打安打一直打！⚾", "這球太神啦！🔥", 
+            "三振他！三振他！", "全壘打！！！⚾",
+            "台灣好棒！", "防守太漂亮了！", "穩住！可以的！", "水啦！", 
+            "這就是我們的王牌！", "球給智傑！啊不是，球給家正！"
+        ];
+
+        // 產生一則彈幕
+        function createDanmaku(text, isUser = false) {
+            const container = document.getElementById('danmaku-container');
+            const el = document.createElement('div');
+            el.className = 'danmaku-item';
+            el.innerText = text;
+            
+            // 隨機高度 (0% 到 80% 之間)
+            const topPos = Math.floor(Math.random() * 80);
+            el.style.top = `${topPos}%`;
+
+            // 隨機字體大小
+            const fontSize = Math.random() * 0.5 + 1; // 1rem 到 1.5rem
+            el.style.fontSize = `${fontSize}rem`;
+
+            // 💡 特效：使用者自己發射的彈幕，給予專屬「黃金VIP」邊框！
+            if (isUser) {
+                el.style.color = '#ffeb3b';
+                el.style.border = '2px solid #ffeb3b';
+                el.style.padding = '2px 10px';
+                el.style.borderRadius = '15px';
+                el.style.backgroundColor = 'rgba(0,0,0,0.6)';
+                el.style.zIndex = '10000'; // 確保自己的在最上層
+            } else {
+                // 電腦模擬的給隨機顏色
+                const colors = ['#ffffff', '#bb86fc', '#4caf50', '#ff9800', '#03dac6', '#ff5252'];
+                el.style.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            // 隨機飛行速度 (5秒 到 9秒之間)
+            const duration = Math.random() * 4 + 5;
+            el.style.animationDuration = `${duration}s`;
+
+            container.appendChild(el);
+
+            // 🧹 效能優化：動畫結束後自動把字刪除，才不會吃光手機記憶體！
+            el.addEventListener('animationend', () => {
+                el.remove();
+            });
+        }
+
+        // 按下按鈕發射
+        function shootDanmaku() {
+            const input = document.getElementById('danmaku-text');
+            const text = input.value.trim();
+            if (text !== '') {
+                createDanmaku(text, true); // true 代表是使用者自己發的
+                input.value = ''; // 發射完清空輸入框
+            }
+        }
+
+        // 支援手機小鍵盤的 Enter 鍵發射
+        document.getElementById('danmaku-text').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                shootDanmaku();
+                this.blur(); // 發射完自動收起鍵盤
+            }
+        });
+
+        // 🤖 AI 氣氛組：每 1.5 秒隨機決定要不要丟一句罐頭彈幕出來
+        setInterval(() => {
+            // 只有在看「今天」的比賽時，才有熱鬧的彈幕
+            if (currentSelectedDate === 'today' && Math.random() > 0.4) {
+                const randomText = defaultDanmakus[Math.floor(Math.random() * defaultDanmakus.length)];
+                createDanmaku(randomText);
+            }
+        }, 1500);
     </script>
 </body>
 </html>
+
 
 
 
