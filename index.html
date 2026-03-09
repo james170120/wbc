@@ -562,7 +562,7 @@
             const apiUrl = `https://statsapi.mlb.com/api/v1/schedule?sportId=51&hydrate=team,linescore,boxscore,decisions&startDate=${formatDate(fetchStart)}&endDate=${formatDate(fetchEnd)}`;
 
             try {
-                const response = await fetch(apiUrl);
+                const response = await fetch(apiUrl, { cache: 'no-store' });
                 const data = await response.json();
                 if (!data.dates || data.dates.length === 0) { container.innerHTML = '<div class="loading">無賽程資料 🙇‍♂️</div>'; return; }
 
@@ -655,7 +655,7 @@
                     }
 
                     try {
-                        const liveRes = await fetch(`https://statsapi.mlb.com/api/v1.1/game/${game.gamePk}/feed/live`);
+                        const liveRes = await fetch(`https://statsapi.mlb.com/api/v1.1/game/${game.gamePk}/feed/live`, { cache: 'no-store' });
                         const liveData = await liveRes.json();
                         
                         let playDescs = [];
@@ -802,10 +802,18 @@
                 fetchWBCGames();
             }
         }, 5000); 
-        
+        // 👇 老師加上的「分頁喚醒雷達」👇
+        // 當你從別的分頁切換回來時，立刻強制更新一次畫面！
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible" && currentSelectedDate === 'today') {
+                console.log("👀 偵測到畫面喚醒，立即強制更新比分！");
+                fetchWBCGames();
+            }
+        });
     </script>
 </body>
 </html>
+
 
 
 
