@@ -17,22 +17,35 @@
     <meta property="og:image" content="https://james170120.github.io/wbc/share.jpg"> 
     <meta property="og:type" content="website">
 
-    <style>
+<style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #121212; color: #ffffff; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; overscroll-behavior-y: none;}
             
+        /* 📌 修正 1：完美置中的標題與按鈕 */
         .header-container { 
             display: flex; justify-content: space-between; align-items: center; 
             width: 100%; max-width: 600px; position: sticky; top: 0; z-index: 1000;
-            padding-top: 15px; margin-top: -15px; /* 抵銷 body padding 確保貼齊頂部 */
-            padding-bottom: 10px; margin-bottom: 20px;
-            background: rgba(18, 18, 18, 0.85); /* 微透明背景 */
-            backdrop-filter: blur(12px); /* 蘋果級毛玻璃模糊 */
+            padding: 15px 0; margin-top: -15px; margin-bottom: 20px;
+            background: rgba(18, 18, 18, 0.85); 
+            backdrop-filter: blur(12px); 
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         h1 { color: #e0e0e0; font-size: 1.45rem; margin: 0; flex-grow: 1; text-align: center; letter-spacing: 1px; padding: 0 45px; line-height: 1.3;}
         .title-logo { height: 1.3em; vertical-align: middle; margin-right: 8px; margin-bottom: 4px; }
-        .menu-btn { background: none; border: none; color: #e0e0e0; font-size: 1.8rem; cursor: pointer; padding: 5px; position: absolute; right: 0; outline: none; -webkit-tap-highlight-color: transparent;}
-        .date-menu { position: absolute; top: 45px; right: 0; background-color: #1e1e1e; border: 1px solid #444; border-radius: 8px; box-shadow: 0 8px 16px rgba(0,0,0,0.8); display: none; flex-direction: column; z-index: 100; overflow: hidden; min-width: 180px;}
+        
+        .menu-btn { 
+            background: none; border: none; color: #e0e0e0; font-size: 1.8rem; cursor: pointer; 
+            padding: 5px; position: absolute; right: 0; 
+            top: 50%; transform: translateY(-50%); /* ✨ 確保按鈕永遠垂直置中 */
+            outline: none; -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* 📌 修正 2：下拉選單從標題列底部展開 */
+        .date-menu { 
+            position: absolute; top: 100%; right: 0; margin-top: 5px; /* ✨ 自動貼齊頂部列的下緣 */
+            background-color: #1e1e1e; border: 1px solid #444; border-radius: 8px; 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.8); display: none; flex-direction: column; 
+            z-index: 100; overflow: hidden; min-width: 180px;
+        }
         .date-menu.open { display: flex; }
         .menu-item { padding: 14px 20px; border-bottom: 1px solid #333; cursor: pointer; color: #ccc; font-size: 1rem; text-align: center;}
         .menu-item:last-child { border-bottom: none; }
@@ -41,7 +54,6 @@
 
         #games-container { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; padding-bottom: 30px;}
 
-        /* 🧊 高級感毛玻璃賽事卡片 (無動畫版) */
         .game-card { 
             background: linear-gradient(145deg, rgba(35,35,35,0.8) 0%, rgba(20,20,20,0.8) 100%); 
             border-radius: 16px; padding: 20px; 
@@ -53,10 +65,19 @@
         .game-date-badge { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px dashed #333; letter-spacing: 1px;}
         .score-board { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; }
         .team-box { text-align: center; width: 35%; }
-        .team-name { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; color: #bb86fc; }
         
-        /* 🏆 勝利隊伍的酷酷樣式 🏆 */
-        .team-box.winner-team { background: radial-gradient(circle, rgba(255,235,59,0.15) 0%, rgba(30,30,30,0) 70%); border-radius: 50%; }
+        /* 📌 修正 3：防止長隊名與國旗導致換行破版 */
+        .team-name { 
+            font-size: 1.1rem; /* ✨ 稍微縮小以容納國旗與表情 */
+            font-weight: bold; margin-bottom: 8px; color: #bb86fc; 
+            white-space: nowrap; /* ✨ 絕對不准換行，保護計分板高度 */
+        }
+        
+        /* 📌 修正 4：勝利樣式取消 50% 圓角，改為柔和發光 */
+        .team-box.winner-team { 
+            background: radial-gradient(ellipse at center, rgba(255,235,59,0.15) 0%, rgba(30,30,30,0) 70%); 
+            border-radius: 12px; /* ✨ 配合整體卡片的微圓角 */
+        }
         .team-box.winner-team .team-name { color: #ffeb3b !important; text-shadow: 0 0 10px rgba(255, 235, 59, 0.7); }
         .team-box.winner-team .team-name::after { content: "🎉"; margin-left: 6px; font-size: 1.1rem; vertical-align: middle; }
         .team-box.winner-team .score { color: #ffeb3b; text-shadow: 0 0 15px rgba(255, 235, 59, 0.8); }
@@ -124,7 +145,6 @@
         .tv-dec-name { width: 65%; padding: 6px 12px; color: #e0e0e0; font-size: 0.9rem; font-weight: bold; }
 
         .loading { text-align: center; color: #888; font-size: 1.1rem; padding: 20px; width: 100%;}
-        
     </style>
 </head>
 <body>
@@ -786,6 +806,7 @@
     </script>
 </body>
 </html>
+
 
 
 
