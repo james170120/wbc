@@ -19,8 +19,16 @@
 
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #121212; color: #ffffff; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; overscroll-behavior-y: none;}
-        
-        .header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 600px; position: relative; margin-bottom: 20px;}
+            
+        .header-container { 
+            display: flex; justify-content: space-between; align-items: center; 
+            width: 100%; max-width: 600px; position: sticky; top: 0; z-index: 1000;
+            padding-top: 15px; margin-top: -15px; /* 抵銷 body padding 確保貼齊頂部 */
+            padding-bottom: 10px; margin-bottom: 20px;
+            background: rgba(18, 18, 18, 0.85); /* 微透明背景 */
+            backdrop-filter: blur(12px); /* 蘋果級毛玻璃模糊 */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
         h1 { color: #e0e0e0; font-size: 1.45rem; margin: 0; flex-grow: 1; text-align: center; letter-spacing: 1px; padding: 0 45px; line-height: 1.3;}
         .title-logo { height: 1.3em; vertical-align: middle; margin-right: 8px; margin-bottom: 4px; }
         .menu-btn { background: none; border: none; color: #e0e0e0; font-size: 1.8rem; cursor: pointer; padding: 5px; position: absolute; right: 0; outline: none; -webkit-tap-highlight-color: transparent;}
@@ -33,7 +41,21 @@
 
         #games-container { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; padding-bottom: 30px;}
 
-        .game-card { background-color: #1e1e1e; border-radius: 12px; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); border: 1px solid #333; }
+        /* 🧊 高級感毛玻璃賽事卡片 */
+        .game-card { 
+            background: linear-gradient(145deg, rgba(35,35,35,0.8) 0%, rgba(20,20,20,0.8) 100%); 
+            border-radius: 16px; padding: 20px; 
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(8px);
+            animation: slideUpFade 0.5s ease-out forwards; /* ✨ 綁定進場動畫 */
+            opacity: 0; /* 初始隱藏，交給動畫顯示 */
+        }
+        /* ✨ 絲滑進場動畫 */
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .game-date-badge { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px dashed #333; letter-spacing: 1px;}
         .score-board { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; }
         .team-box { text-align: center; width: 35%; }
@@ -126,6 +148,7 @@
     <script>
         // 🌟 2026 WBC 終極巨無霸中英對照大辭典 (老師去重複清爽版) 🌟
         const translateDict = {
+            
             "Kai-Wei Lin": "林凱威",
             "grounds into a force out": "擊出滾地球形成封殺",
             "out at 2nd": "在二壘遭封殺",
@@ -401,6 +424,16 @@
             "Omar Mendoza": "門多薩", "Juan Montes": "蒙特斯", "Ismael Munguia": "蒙吉亞",
             "Cristhian Sandoval": "桑多瓦",  "Josh Mallitz": "喬許·馬利茲","Matt Bowman": "馬特·鮑曼","Roel Ramírez": "羅爾·拉米雷茲",
             "James Gonzalez": "詹姆斯·岡薩雷茲",  "Jahmai Jones": "強梅瓊斯","Shay Whitcomb": "謝維康","Hyeseong Kim": "金慧成"
+        };
+        // 🇹🇼 國旗 Emoji 產生器
+        const getFlag = (teamName) => {
+            const flags = {
+                "中華隊": "🇹🇼", "日本": "🇯🇵", "韓國": "🇰🇷", "澳洲": "🇦🇺", "美國": "🇺🇸", 
+                "古巴": "🇨🇺", "多明尼加": "🇩🇴", "委內瑞拉": "🇻🇪", "荷蘭": "🇳🇱", 
+                "波多黎各": "🇵🇷", "捷克": "🇨🇿", "加拿大": "🇨🇦", "哥倫比亞": "🇨🇴", 
+                "墨西哥": "🇲🇽", "巴西": "🇧🇷", "尼加拉瓜": "🇳🇮", "巴拿馬": "🇵🇦", "義大利": "🇮🇹"
+            };
+            return flags[teamName] ? flags[teamName] + " " : "";
         };
 
         const N8N_WEBHOOK_URL = "https://james15211521.zeabur.app/webhook/report-wbc-words"; 
@@ -721,9 +754,9 @@
                         <div class="game-card">
                             <div class="game-date-badge">📅 ${timeString}</div>
                             <div class="score-board">
-                                <div class="team-box ${awayWinnerClass}"><div class="team-name">${awayTeam}</div><div class="score">${awayScore}</div></div>
+                                <div class="team-box ${awayWinnerClass}"><div class="team-name">${getFlag(awayTeam)}${awayTeam}</div><div class="score">${awayScore}</div></div>
                                 <div class="game-status">${statusHtml}</div>
-                                <div class="team-box ${homeWinnerClass}"><div class="team-name">${homeTeam}</div><div class="score">${homeScore}</div></div>
+                                <div class="team-box ${homeWinnerClass}"><div class="team-name">${getFlag(homeTeam)}${homeTeam}</div><div class="score">${homeScore}</div></div>
                             </div>
                             ${linescoreTableHtml}
                             ${extraInfoHtml}
@@ -759,6 +792,7 @@
     </script>
 </body>
 </html>
+
 
 
 
