@@ -543,15 +543,17 @@
                     let awayWinnerClass = ''; 
                     let homeWinnerClass = ''; 
 
-                    // ✅ 因為 isLive 已經被我們往上移了，所以這行不會再報錯！
-                    if (!isLive && statusCode === 'F' && awayScore !== '-' && homeScore !== '-') {
+                    // ✅ 判定條件升級：把「提前結束 (Completed Early)」跟「Game Over (O)」都加進去！
+                    const isCompleted = statusCode === 'F' || statusCode === 'O' || game.status.detailedState === 'Completed Early' || game.status.detailedState === 'Final';
+
+                    if (isCompleted && awayScore !== '-' && homeScore !== '-') {
                         const aScore = parseInt(awayScore);
                         const hScore = parseInt(homeScore);
 
                         if (aScore > hScore) {
-                            awayWinnerClass = 'winner-team';
+                            awayWinnerClass = 'winner-team'; // 客隊贏了
                         } else if (hScore > aScore) {
-                            homeWinnerClass = 'winner-team';
+                            homeWinnerClass = 'winner-team'; // 主隊贏了
                         }
                     }
                     
@@ -744,3 +746,4 @@
     </script>
 </body>
 </html>
+
