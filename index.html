@@ -38,6 +38,17 @@
         .score-board { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; }
         .team-box { text-align: center; width: 35%; }
         .team-name { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; color: #bb86fc; }
+        /* 🏆 勝利隊伍的酷酷樣式 🏆 */
+        
+        /* 1. 勝利隊伍的盒子 (加個淡淡的金光背景) */
+        .team-box.winner-team { background: radial-gradient(circle, rgba(255,235,59,0.15) 0%, rgba(30,30,30,0) 70%); border-radius: 50%; }
+
+        /* 2. 勝利隊伍的名字 (變成金黃色，並加上獎盃) */
+        .team-box.winner-team .team-name { color: #ffeb3b !important; text-shadow: 0 0 10px rgba(255, 235, 59, 0.7); }
+        .team-box.winner-team .team-name::after { content: "🏆"; margin-left: 6px; font-size: 1.1rem; vertical-align: middle; }
+
+        /* 3. 勝利隊伍的分數 (也變成金黃色，更有張力) */
+        .team-box.winner-team .score { color: #ffeb3b; text-shadow: 0 0 15px rgba(255, 235, 59, 0.8); }
         .score { font-size: 2.5rem; font-weight: 900; }
         .game-status { width: 30%; text-align: center; font-size: 0.95rem; color: #aaaaaa; }
         .live-indicator { color: #ff5252; font-weight: bold; animation: blink 1.5s infinite; font-size: 1rem;}
@@ -611,8 +622,25 @@
                 for (const game of filteredGames) {
                     const awayTeam = translate(game.teams.away.team.name);
                     const homeTeam = translate(game.teams.home.team.name);
-                    const awayScore = game.teams.away.score ?? '-';
-                    const homeScore = game.teams.home.score ?? '-';
+                    // --- 獲勝隊伍亮眼呈現系統 ---
+                    let awayScore = game.teams.away.score ?? '-';
+                    let homeScore = game.teams.home.score ?? '-';
+                    let awayWinnerClass = ''; // 客隊的勝利樣式 (預設空的)
+                    let homeWinnerClass = ''; // 主隊的勝利樣式 (預設空的)
+
+                    // ✅ 判定條件：只有在「比賽結束」時才去抓贏家，LIVE 中不抓！
+                    if (!isLive && game.status.statusCode === 'F' && awayScore !== '-' && homeScore !== '-') {
+                        // 比較分數 (記得轉成數字，API 抓下來有時是字串)
+                        const aScore = parseInt(awayScore);
+                        const hScore = parseInt(homeScore);
+
+                        if (aScore > hScore) {
+                            awayWinnerClass = 'winner-team'; // 客隊贏了，套用樣式
+                        } else if (hScore > aScore) {
+                            homeWinnerClass = 'winner-team'; // 主隊贏了，套用樣式
+                        }
+                        // 如果平手 (例如熱身賽)，就不動
+                    }
                     const statusCode = game.status.statusCode;
                     const isLive = statusCode === 'I' || statusCode === 'PW';
                     const inning = game.linescore ? `第 ${game.linescore.currentInning} 局 ${game.linescore.isTopInning ? '上' : '下'}` : '';
@@ -772,9 +800,9 @@
                         <div class="game-card">
                             <div class="game-date-badge">📅 ${timeString}</div>
                             <div class="score-board">
-                                <div class="team-box"><div class="team-name">${awayTeam}</div><div class="score">${awayScore}</div></div>
+                                <div class="team-box ${awayWinnerClass}"><div class="team-name">${awayTeam}</div><div class="score">${awayScore}</div></div>
                                 <div class="game-status">${statusHtml}</div>
-                                <div class="team-box"><div class="team-name">${homeTeam}</div><div class="score">${homeScore}</div></div>
+                                <div class="team-box ${homeWinnerClass}"><div class="team-name">${homeTeam}</div><div class="score">${homeScore}</div></div>
                             </div>
                             ${linescoreTableHtml}
                             ${extraInfoHtml}
@@ -811,6 +839,7 @@
 </body>
 
 </html>
+
 
 
 
