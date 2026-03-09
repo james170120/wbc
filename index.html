@@ -14,13 +14,13 @@
 
     <meta property="og:title" content="⚾ 2026 WBC 專屬即時戰情室">
     <meta property="og:description" content="零時差掌握 2026 世界棒球經典賽！即時比分、文字轉播、先發打線與賽後戰報，完全免費無廣告 By 老杜。">
-    <meta property="og:image" content="https://james170120.github.io/wbc/share.jpg"> <meta property="og:type" content="website">
+    <meta property="og:image" content="https://james170120.github.io/wbc/share.jpg"> 
+    <meta property="og:type" content="website">
 
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #121212; color: #ffffff; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; overscroll-behavior-y: none;}
         
         .header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 600px; position: relative; margin-bottom: 20px;}
-        /* 這裡加上 padding: 0 45px 讓標題不會撞到按鈕 */
         h1 { color: #e0e0e0; font-size: 1.45rem; margin: 0; flex-grow: 1; text-align: center; letter-spacing: 1px; padding: 0 45px; line-height: 1.3;}
         .title-logo { height: 1.3em; vertical-align: middle; margin-right: 8px; margin-bottom: 4px; }
         .menu-btn { background: none; border: none; color: #e0e0e0; font-size: 1.8rem; cursor: pointer; padding: 5px; position: absolute; right: 0; outline: none; -webkit-tap-highlight-color: transparent;}
@@ -38,17 +38,13 @@
         .score-board { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; }
         .team-box { text-align: center; width: 35%; }
         .team-name { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; color: #bb86fc; }
-        /* 🏆 勝利隊伍的酷酷樣式 🏆 */
         
-        /* 1. 勝利隊伍的盒子 (加個淡淡的金光背景) */
+        /* 🏆 勝利隊伍的酷酷樣式 🏆 */
         .team-box.winner-team { background: radial-gradient(circle, rgba(255,235,59,0.15) 0%, rgba(30,30,30,0) 70%); border-radius: 50%; }
-
-        /* 2. 勝利隊伍的名字 (變成金黃色，並加上獎盃) */
         .team-box.winner-team .team-name { color: #ffeb3b !important; text-shadow: 0 0 10px rgba(255, 235, 59, 0.7); }
         .team-box.winner-team .team-name::after { content: "🏆"; margin-left: 6px; font-size: 1.1rem; vertical-align: middle; }
-
-        /* 3. 勝利隊伍的分數 (也變成金黃色，更有張力) */
         .team-box.winner-team .score { color: #ffeb3b; text-shadow: 0 0 15px rgba(255, 235, 59, 0.8); }
+        
         .score { font-size: 2.5rem; font-weight: 900; }
         .game-status { width: 30%; text-align: center; font-size: 0.95rem; color: #aaaaaa; }
         .live-indicator { color: #ff5252; font-weight: bold; animation: blink 1.5s infinite; font-size: 1rem;}
@@ -79,13 +75,11 @@
         .count span { font-weight: bold; }
         .c-balls { color: #4caf50; } .c-strikes { color: #ff5252; } .c-outs { color: #ff9800; }    
         
-        /* 👇 這裡幫你把排版修好了，保證不斷字 👇 */
         .player-info { display: flex; flex-direction: column; gap: 6px; width: 62%; }
         .player-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #444; padding-bottom: 3px; }
         .player-row:last-child { border-bottom: none; }
         .label { color: #888; font-size: 0.85rem; white-space: nowrap; flex-shrink: 0; }
         .name { color: #fff; font-weight: bold; text-align: right; flex-grow: 1; margin-left: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-        /* 👆 排版修正結束 👆 */
 
         .lineup-container { display: flex; justify-content: space-between; background-color: #1a1a1a; padding: 12px; border-radius: 8px; border: 1px solid #333;}
         .team-lineup { width: 48%; }
@@ -129,24 +123,23 @@
     </div>
 
     <script>
-        // 🌟 2026 WBC 終極巨無霸中英對照大辭典 (Yusaku 專屬版) 🌟
+        // 🌟 2026 WBC 終極巨無霸中英對照大辭典 (老師去重複清爽版) 🌟
         const translateDict = {
-            // --- 中華隊新登板投手 ---
             "Kai-Wei Lin": "林凱威",
-
-            // --- 詳細文字轉播術語 ---
             "grounds into a force out": "擊出滾地球形成封殺",
             "out at 2nd": "在二壘遭封殺",
             "Mound Visit": "教練上投手丘暫停",
             "to 1st": "上一壘",
             "1st": "一壘",
             "2nd": "二壘",
-            "3rd": "三壘","Chinese Taipei": "中華隊", "Japan": "日本", "Australia": "澳洲", "Czechia": "捷克", "Korea": "韓國", 
+            "3rd": "三壘",
+            "Chinese Taipei": "中華隊", "Japan": "日本", "Australia": "澳洲", "Czechia": "捷克", "Korea": "韓國", 
             "Cuba": "古巴", "USA": "美國", "Venezuela": "委內瑞拉", "Kingdom of the Netherlands": "荷蘭", 
             "Netherlands": "荷蘭", "Puerto Rico": "波多黎各", "Dominican Republic": "多明尼加", "Mexico": "墨西哥",
             "Canada": "加拿大", "Great Britain": "英國", "Italy": "義大利", "Panama": "巴拿馬", "Colombia": "哥倫比亞",
             "Completed Early": "提前結束", "Final": "比賽結束", "In Progress": "進行中", "Warmup": "賽前熱身", "Scheduled": "即將開打",
             "Postponed": "比賽延期", "Suspended": "保留比賽", "Delayed": "比賽延遲","Manager challenge": "教練挑戰",
+            
             // --- 比賽詳細文字轉播術語 ---
             "strikes out swinging": "揮棒落空遭三振",
             "strikes out called": "站著不動遭三振",
@@ -174,27 +167,18 @@
             "caught stealing": "盜壘失敗遭觸殺",
             "wild pitch": "發生暴投",
 
-            // ================= 🇹🇼 中華隊 (Chinese Taipei) 2026 正式30人名單 =================
-            "Chinese Taipei": "中華隊",
-            // 投手 (16人)
+            // --- 各國球員名單 ---
             "Tzu-Chen Sha": "沙子宸", "Hao-Chun Cheng": "鄭浩均", "Yu-Min Lin": "林昱珉", 
             "Ching-Yu Kuo": "郭俊麟", "Chia-Hao Sung": "宋家豪", "Kuan-Yu Chen": "陳冠宇",
             "Po-Yu Chen": "陳柏毓", "Ruei-Yang Gu Lin": "古林睿煬", "Gu Lin Ruei-yang": "古林睿煬",
-            "Jo-Hsi Hsu": "徐若熙", "Chih-Wei Hu": "胡智爲", "Kai-Wei Lin": "林凱威", 
-            "Shih-Hsiang Lin": "林詩翔", "Yi-Lei Sun": "孫易磊", "Chun-Yueh Tseng": "曾峻岳", 
-            "Chun-Wei Chang": "張峻瑋", "Chen-Chung-Ao Chuang": "莊陳仲敖", "Wei-En Lin": "林維恩", "Yi Chang": "張奕",
-            // 捕手 (3人)
+            "Jo-Hsi Hsu": "徐若熙", "Chih-Wei Hu": "胡智爲", "Shih-Hsiang Lin": "林詩翔", 
+            "Yi-Lei Sun": "孫易磊", "Chun-Yueh Tseng": "曾峻岳", "Chun-Wei Chang": "張峻瑋", 
+            "Chen-Chung-Ao Chuang": "莊陳仲敖", "Wei-En Lin": "林維恩", "Yi Chang": "張奕",
             "Lyle Lin": "林家正", "Kungkuan Giljegiljaw": "吉力吉撈．鞏冠", "Shao-Hung Chiang": "蔣少宏",
-            // 內野手 (7人)
             "Cheng-Yu Chang": "張政禹", "Tsung-Che Cheng": "鄭宗哲", "Kun-Yu Chiang": "江坤宇", 
             "Nien-Ting Wu": "吳念庭", "Yu Chang": "張育成", "Tzu-Wei Lin": "林子偉", 
-            "Jonathon Long": "龍恩", "Hao-Yu Lee": "李灝宇",
-            // 外野手 (4人)
-            "An-Ko Lin": "林安可", "Stuart Fairchild": "費爾查德", "Chieh-Hsien Chen": "陳傑憲", 
-            "Chen-Wei Chen": "陳晨威", "Cheng-Jui Sung": "宋晟睿",
-
-            // ================= 🇯🇵 日本武士隊 (Japan) 2026 最終30人名單 =================
-            "Japan": "日本", 
+            "Jonathon Long": "龍恩", "Hao-Yu Lee": "李灝宇", "An-Ko Lin": "林安可", 
+            "Stuart Fairchild": "費爾查德", "Chieh-Hsien Chen": "陳傑憲", "Chen-Wei Chen": "陳晨威", "Cheng-Jui Sung": "宋晟睿",
             "Shohei Ohtani": "大谷翔平", "Yoshinobu Yamamoto": "山本由伸", "Yusei Kikuchi": "菊池雄星",
             "Yuki Matsui": "松井裕樹", "Tomoyuki Sugano": "菅野智之", "Hiroya Miyagi": "宮城大彌",
             "Hiromi Itoh": "伊藤大海", "Hiromi Ito": "伊藤大海", "Taisei Ota": "大勢", "Taisei": "大勢",
@@ -207,8 +191,6 @@
             "Kazuma Okamoto": "岡本和真", "Munetaka Murakami": "村上宗隆", "Kensuke Kondoh": "近藤健介",
             "Kensuke Kondo": "近藤健介", "Ukyo Shuto": "周東佑京", "Shota Morishita": "森下翔太",
             "Masataka Yoshida": "吉田正尚", "Seiya Suzuki": "鈴木誠也",
-
-            //大翻譯數據庫
             "Mike Trout": "楚奧特", "Mookie Betts": "貝茲", "Freddie Freeman": "弗里曼", "Aaron Judge": "賈吉",
             "Bryce Harper": "哈波", "Trea Turner": "透納", "Paul Goldschmidt": "高施密特", "Nolan Arenado": "亞瑞納多", 
             "Kyle Tucker": "塔克", "J.T. Realmuto": "瑞爾穆托", "Devin Williams": "威廉斯", "Pete Alonso": "阿隆索",
@@ -216,115 +198,110 @@
             "Ha-Seong Kim": "金河成", "Jung Hoo Lee": "李政厚", "Baekho Kang": "姜白虎", "Tommy Edman": "艾德曼", 
             "Kwang Hyun Kim": "金廣鉉", "Woo-Suk Go": "高佑錫", "Eui-ji Yang": "梁義智", "Hyun-Soo Kim": "金賢洙",  "Will Cresswell": "威爾·克雷斯韋爾",
             "Jeong Choi": "崔廷", "Chang-mo Koo": "具昌模","Angel Zerpa": "安赫爾·澤帕",  "Andre Scrubb": "安德烈·斯克羅布",  "Hyun Jin Ryu": "柳賢振",
-  "Enmanuel De Jesus": "恩曼紐·德赫蘇斯","Chavez Fernander": "費南德茲·查維茲","Vance Worley": "沃利","Nick Ward": "尼克·沃德",
-"Do Yeong Kim": "金度永","Hyun Min Ahn": "安賢珉","Si Hwan Roh": "盧時煥","Ju Won Kim": "金柱元","Hyung Jun Kim": "金炯俊","Yeong Hyun Park": "朴永賢",
-"Cheng-Hui Sung": "宋政輝","Chen Zhong-Ao Zhuang": "莊振中奧","Ernie Clement": "歐尼·克萊門特","Roman Anthony": "羅曼·安東尼","Wallace Clark": "華勒斯·克拉克",
-"Erik González": "埃里克·岡薩雷斯","Junior Lake": "朱尼爾·雷克","Amed Rosario": "阿梅德·羅薩里奧","Carlos Santana": "卡洛斯·桑塔納",
-"Austin Wells": "奧斯汀·威爾斯","Geraldo Perdomo": "赫拉爾多·佩爾多莫","Seranthony Domínguez": "塞蘭索尼·多明格斯","Willi Castro": "威利·卡斯特羅",
-"Heliot Ramos": "海利奧特·拉莫斯","Carlos Cortes": "卡洛斯·寇茲","Luis Vázquez": "路易斯·巴斯奎茲","Emmanuel Rivera": "伊曼紐爾·里維拉",
-"Eddie Rosario": "艾迪·羅薩里奧","Martín Maldonado": "馬丁·馬爾多納多","Seth Lugo": "賽斯·盧戈","Jarren Duran": "賈倫·杜蘭","Abdiel Mendoza": "門多薩",
-"Jazz Chisholm Jr.": "小賈茲·奇索姆","Nate Eaton": "內特·伊頓","Jonathan Aranda": "強納森·阿蘭達","Harry Ford": "哈利·福特","Rob Kaminsky": "羅布·卡明斯基",
-"Alejandro Kirk": "亞歷杭德羅·柯克","BJ Murray": "B.J.·默里","Jared Serna": "賈瑞德·塞納","Matt Koperniak": "馬特·科佩涅克","Kyung-Eun Noh": "盧慶恩",
-"Nacho Alvarez Jr.": "納喬·阿爾瓦雷斯","Kristian Robinson": "克里斯蒂安·羅賓森","Nick Gonzales": "尼克·岡薩雷斯","Ivan Johnson": "伊凡·約翰遜",
-"Alek Thomas": "阿雷克·托馬斯","Ian Lewis Jr.": "伊恩·路易斯","Joey Ortiz": "喬伊·奧爾蒂斯","Trayce Thompson": "特雷斯·湯普森",
-"Robert Garcia": "羅伯特·加西亞","Gary Gill Hill": "蓋瑞·吉爾·希爾","Jakey Josepha": "傑基·喬瑟法","Maikel Garcia": "麥凱爾·加西亞",
-"Ezequiel Tovar": "以斯奎爾·托瓦爾","William Contreras": "威廉·孔特雷拉斯","Javier Sanoja": "哈維爾·薩諾哈","Andrés Giménez": "安德烈斯·希梅內斯",
-"Ranger Suarez": "蘭格·蘇亞雷斯","Roel Santos": "羅埃爾·桑托斯","Allen Córdoba": "艾倫·科爾多瓦","Edmundo Sosa": "埃德蒙多·索薩",
-"Ariel Martinez": "阿列爾·馬丁內斯","José Caballero": "何塞·卡瓦列羅","Alfredo Despaigne": "阿爾弗雷多·德斯潘耶","Jonathan Araúz": "強納森·阿勞斯",
-"Erisbel Arruebarrena": "埃里斯貝爾·阿魯巴雷納","Leonardo Bernal": "萊昂納多·貝納爾","Omar Hernandez": "奧馬爾·埃爾南德斯","Miles Langhorne": "邁爾斯·蘭格霍恩",
-"Leo Jiménez": "里奧·希門尼斯","Yoelkis Guibert": "約爾基斯·吉伯特","Jhonny Santos": "約翰尼·桑托斯","Leonel Moas Jr.": "小萊昂內爾·莫阿斯",
-"Sam Aldegheri": "山姆·阿爾德格里","Kevin Kelly": "凱文·凱利",  "Enzo Sawayama": "澤山恩佐",  "Kenny Hernandez": "肯尼·赫南德茲",
-"Jose Ramos": "何塞·拉莫斯","Yiddi Cappe": "伊迪·卡佩","Christian Bethancourt": "克里斯蒂安·貝坦寇特","Luis Quiñones": "路易斯·基尼奧斯",
+            "Enmanuel De Jesus": "恩曼紐·德赫蘇斯","Chavez Fernander": "費南德茲·查維茲","Vance Worley": "沃利","Nick Ward": "尼克·沃德",
+            "Do Yeong Kim": "金度永","Hyun Min Ahn": "安賢珉","Si Hwan Roh": "盧時煥","Ju Won Kim": "金柱元","Hyung Jun Kim": "金炯俊","Yeong Hyun Park": "朴永賢",
+            "Cheng-Hui Sung": "宋政輝","Chen Zhong-Ao Zhuang": "莊振中奧","Ernie Clement": "歐尼·克萊門特","Roman Anthony": "羅曼·安東尼","Wallace Clark": "華勒斯·克拉克",
+            "Erik González": "埃里克·岡薩雷斯","Junior Lake": "朱尼爾·雷克","Amed Rosario": "阿梅德·羅薩里奧","Carlos Santana": "卡洛斯·桑塔納",
+            "Austin Wells": "奧斯汀·威爾斯","Geraldo Perdomo": "赫拉爾多·佩爾多莫","Seranthony Domínguez": "塞蘭索尼·多明格斯","Willi Castro": "威利·卡斯特羅",
+            "Heliot Ramos": "海利奧特·拉莫斯","Carlos Cortes": "卡洛斯·寇茲","Luis Vázquez": "路易斯·巴斯奎茲","Emmanuel Rivera": "伊曼紐爾·里維拉",
+            "Eddie Rosario": "艾迪·羅薩里奧","Martín Maldonado": "馬丁·馬爾多納多","Seth Lugo": "賽斯·盧戈","Jarren Duran": "賈倫·杜蘭","Abdiel Mendoza": "門多薩",
+            "Jazz Chisholm Jr.": "小賈茲·奇索姆","Nate Eaton": "內特·伊頓","Jonathan Aranda": "強納森·阿蘭達","Harry Ford": "哈利·福特","Rob Kaminsky": "羅布·卡明斯基",
+            "Alejandro Kirk": "亞歷杭德羅·柯克","BJ Murray": "B.J.·默里","Jared Serna": "賈瑞德·塞納","Matt Koperniak": "馬特·科佩涅克","Kyung-Eun Noh": "盧慶恩",
+            "Nacho Alvarez Jr.": "納喬·阿爾瓦雷斯","Kristian Robinson": "克里斯蒂安·羅賓森","Nick Gonzales": "尼克·岡薩雷斯","Ivan Johnson": "伊凡·約翰遜",
+            "Alek Thomas": "阿雷克·托馬斯","Ian Lewis Jr.": "伊恩·路易斯","Joey Ortiz": "喬伊·奧爾蒂斯","Trayce Thompson": "特雷斯·湯普森",
+            "Robert Garcia": "羅伯特·加西亞","Gary Gill Hill": "蓋瑞·吉爾·希爾","Jakey Josepha": "傑基·喬瑟法","Maikel Garcia": "麥凱爾·加西亞",
+            "Ezequiel Tovar": "以斯奎爾·托瓦爾","William Contreras": "威廉·孔特雷拉斯","Javier Sanoja": "哈維爾·薩諾哈","Andrés Giménez": "安德烈斯·希梅內斯",
+            "Ranger Suarez": "蘭格·蘇亞雷斯","Roel Santos": "羅埃爾·桑托斯","Allen Córdoba": "艾倫·科爾多瓦","Edmundo Sosa": "埃德蒙多·索薩",
+            "Ariel Martinez": "阿列爾·馬丁內斯","José Caballero": "何塞·卡瓦列羅","Alfredo Despaigne": "阿爾弗雷多·德斯潘耶","Jonathan Araúz": "強納森·阿勞斯",
+            "Erisbel Arruebarrena": "埃里斯貝爾·阿魯巴雷納","Leonardo Bernal": "萊昂納多·貝納爾","Omar Hernandez": "奧馬爾·埃爾南德斯","Miles Langhorne": "邁爾斯·蘭格霍恩",
+            "Leo Jiménez": "里奧·希門尼斯","Yoelkis Guibert": "約爾基斯·吉伯特","Jhonny Santos": "約翰尼·桑托斯","Leonel Moas Jr.": "小萊昂內爾·莫阿斯",
+            "Sam Aldegheri": "山姆·阿爾德格里","Kevin Kelly": "凱文·凱利",  "Enzo Sawayama": "澤山恩佐",  "Kenny Hernandez": "肯尼·赫南德茲",
+            "Jose Ramos": "何塞·拉莫斯","Yiddi Cappe": "伊迪·卡佩","Christian Bethancourt": "克里斯蒂安·貝坦寇特","Luis Quiñones": "路易斯·基尼奧斯",
             "Israel": "以色列","Pre-Game": "賽前","Gabriel Gomes": "加布里埃爾·戈麥斯","Jakob Marsee": "雅各布·馬爾西","Hae-Min Park": "朴海旻",
-"Ja Wook Koo": "具滋旭",  "Luis Severino": "路易斯·塞維里諾",  "Carlos Martínez": "卡洛斯·馬丁內斯",
-  "Ketel Marte": "凱特爾·馬提","Eric Mendez": "埃里克‧曼傑茲","Dylan Wilson": "迪倫·威爾森","Owen Wild": "歐文·懷爾德","Pedro Santos": "佩德羅·桑托斯",
-  "Junior Caminero": "朱尼爾·卡米內羅","Denny Larrondo": "丹尼·拉隆多",  "Arij Fransen": "阿瑞·弗蘭森",  "Dylan DeLucia": "迪倫·德盧西亞",
-  "Yariel Rodríguez": "雅瑞爾·羅德里格斯",  "Albert Abreu": "阿布瑞","Wendell Floranus": "范羅納斯",  "Darien Núñez": "達連·紐涅茲",
-"Wallace Clark": "華萊士·克拉克", "Jyun-Yue Tseng": "曾俊岳",  "Justin Morales": "賈斯汀·莫拉雷斯",  "Rowdy Tellez": "羅伊迪·泰雷斯",  "Jaime Barria": "海梅·巴里亞",  "Miguel Amaya": "米格爾·阿瑪亞",  "Gabriele Quattrini": "加布里埃爾·夸特里尼",
-  "Nick Wells": "尼克·韋爾斯",  "Greg Weissert": "格雷格·魏澤特","Taijuan Walker": "沃克",
-"Jon Berti": "喬恩·貝爾蒂","Vinnie Pasquantino": "文尼·帕斯昆蒂諾","Dominic Canzone": "多米尼克·坎佐內",  "Matthew Lugo": "馬修·盧戈",
-"Lucas Rojo": "盧卡斯·羅霍","Zach Dezenzo": "扎克·德澤佐","Victor Mascai": "維克多·馬斯凱", "Ricardo Sánchez": "李卡多·桑切斯",
-"Kyle Teel": "凱爾·提爾","Gabriel Carmo": "加布里埃爾·卡莫","Jac Caglianone": "傑克·卡格里阿諾",  "Edwin Arroyo": "愛德溫·阿羅約",
-"Felipe Koragi": "費利佩·科拉吉","Thomas Saggese": "湯瑪斯·薩杰塞","Dante Nori": "丹特·諾里","Daniel Federman": "丹尼爾·費德曼",
-"Jaitoine Kelly": "賈托因·凱利","Ceddanne Rafaela": "塞丹恩·拉法埃拉","Ozzie Albies": "歐齊·阿比斯","Donovan Benoit": "多諾萬·貝諾伊特",
-"Hendrik Clementina": "亨德里克·克萊門蒂納","Dayson Croes": "戴森·克羅斯","Druw Jones": "德魯·瓊斯",  "Najer Victor": "納傑爾·維克多",
-  "Alberto Baldonado": "阿爾貝托·巴爾多納多",  "MJ Melendez": "MJ 梅倫德茲",  "Zack Leban": "扎克·李班",  "Severino González": "塞維里諾·岡薩雷斯",
-"Emerson Martinez": "愛默生·馬丁內斯","Harold Ramírez": "哈羅德·拉米雷斯","Tito Polo": "提托·波洛","Guillo Zuñiga": "祖尼加",
-              "Alek Jacob": "雅各布","Juremi Profar": "普洛法","Game Over": "比賽結束","Austin Bergner": "柏格納",  "Bo Gyeong Moon": "文寶京",
-  "Dong Won Park": "朴東源","Ben Simon": "班·西蒙",  "Min Jae Shin": "申敏宰","Hae-Min Park": "朴海民",  "Hyun Bin Moon": "文賢彬",
+            "Ja Wook Koo": "具滋旭",  "Luis Severino": "路易斯·塞維里諾",  "Carlos Martínez": "卡洛斯·馬丁內斯",
+            "Ketel Marte": "凱特爾·馬提","Eric Mendez": "埃里克‧曼傑茲","Dylan Wilson": "迪倫·威爾森","Owen Wild": "歐文·懷爾德","Pedro Santos": "佩德羅·桑托斯",
+            "Junior Caminero": "朱尼爾·卡米內羅","Denny Larrondo": "丹尼·拉隆多",  "Arij Fransen": "阿瑞·弗蘭森",  "Dylan DeLucia": "迪倫·德盧西亞",
+            "Yariel Rodríguez": "雅瑞爾·羅德里格斯",  "Albert Abreu": "阿布瑞","Wendell Floranus": "范羅納斯",  "Darien Núñez": "達連·紐涅茲",
+            "Jyun-Yue Tseng": "曾俊岳",  "Justin Morales": "賈斯汀·莫拉雷斯",  "Rowdy Tellez": "羅伊迪·泰雷斯",  "Jaime Barria": "海梅·巴里亞",  "Miguel Amaya": "米格爾·阿瑪亞",  "Gabriele Quattrini": "加布里埃爾·夸特里尼",
+            "Nick Wells": "尼克·韋爾斯",  "Greg Weissert": "格雷格·魏澤特","Taijuan Walker": "沃克",
+            "Jon Berti": "喬恩·貝爾蒂","Vinnie Pasquantino": "文尼·帕斯昆蒂諾","Dominic Canzone": "多米尼克·坎佐內",  "Matthew Lugo": "馬修·盧戈",
+            "Lucas Rojo": "盧卡斯·羅霍","Zach Dezenzo": "扎克·德澤佐","Victor Mascai": "維克多·馬斯凱", "Ricardo Sánchez": "李卡多·桑切斯",
+            "Kyle Teel": "凱爾·提爾","Gabriel Carmo": "加布里埃爾·卡莫","Jac Caglianone": "傑克·卡格里阿諾",  "Edwin Arroyo": "愛德溫·阿羅約",
+            "Felipe Koragi": "費利佩·科拉吉","Thomas Saggese": "湯瑪斯·薩杰塞","Dante Nori": "丹特·諾里","Daniel Federman": "丹尼爾·費德曼",
+            "Jaitoine Kelly": "賈托因·凱利","Ceddanne Rafaela": "塞丹恩·拉法埃拉","Ozzie Albies": "歐齊·阿比斯","Donovan Benoit": "多諾萬·貝諾伊特",
+            "Hendrik Clementina": "亨德里克·克萊門蒂納","Dayson Croes": "戴森·克羅斯","Druw Jones": "德魯·瓊斯",  "Najer Victor": "納傑爾·維克多",
+            "Alberto Baldonado": "阿爾貝托·巴爾多納多",  "MJ Melendez": "MJ 梅倫德茲",  "Zack Leban": "扎克·李班",  "Severino González": "塞維里諾·岡薩雷斯",
+            "Emerson Martinez": "愛默生·馬丁內斯","Harold Ramírez": "哈羅德·拉米雷斯","Tito Polo": "提托·波洛","Guillo Zuñiga": "祖尼加",
+            "Alek Jacob": "雅各布","Juremi Profar": "普洛法","Game Over": "比賽結束","Austin Bergner": "柏格納",  "Bo Gyeong Moon": "文寶京",
+            "Dong Won Park": "朴東源","Ben Simon": "班·西蒙",  "Min Jae Shin": "申敏宰","Hae-Min Park": "朴海民",  "Hyun Bin Moon": "文賢彬",
             "Juan Soto": "索托", "Manny Machado": "馬查多", "Vladimir Guerrero Jr.": "小葛雷諾", "Rafael Devers": "德佛斯", 
             "Cole Carrigg": "柯爾·卡里格","RJ Schreck": "RJ·史雷克","Harrison Bader": "哈利森·貝德","Spencer Horwitz": "斯賓塞·霍維茲",
-"Zach Levenson": "扎克·萊文森","Eugenio Suárez": "尤金尼奧·蘇亞雷斯","Garrett Stubbs": "加勒特·斯塔布斯","Anthony Molina": "莫里納",
-"Matt Mervis": "麥特·梅維斯","Jake Gelof": "傑克·傑洛夫","Noah Mendlinger": "諾亞·孟德林格","Darell Hernaiz": "達瑞爾·赫爾奈茲",
-"Johan Camargo": "約翰·卡馬戈","Christian Vázquez": "克里斯蒂安·巴斯克斯","Sam Antonacci": "山姆·安東納奇","Enzo Hayashida": "恩佐·林田",
-"Miles Mastrobuoni": "邁爾斯·馬斯特布奧尼","Alek Jacob": "艾利克·雅各布","Hector Villarroel": "赫克托·維拉羅埃爾","Juremi Profar": "尤瑞米·普洛法爾",
-"Lars Huijer": "拉斯·惠耶爾","Austin Bergner": "奧斯汀·伯格納","Tyler Viza": "泰勒·維薩",  "Jose Espada": "何塞．埃斯帕達",
-            "Justin Wylie": "賈斯汀·懷利","Cole Carrigg": "柯爾·卡瑞格","RJ Schreck": "RJ·史瑞克","Harrison Bader": "哈里森·貝德",
-"Spencer Horwitz": "斯賓塞·霍維茨","Zach Levenson": "扎克·雷文森","Eugenio Suárez": "謝維爾斯","Garrett Stubbs": "加勒特·斯塔布斯",
-"Matt Mervis": "馬特·梅維斯","Jake Gelof": "傑克·吉洛夫","Noah Mendlinger": "諾亞·門德林格","Ariel Jurado": "亞利爾·胡拉多",
-"Christian Vázquez": "克里斯汀·瓦茲奎茲","Johan Camargo": "喬漢·卡馬戈","Darell Hernaiz": "達雷爾·赫爾奈茲","Luis Castillo": "路易斯·卡斯蒂略",
-"Sam Antonacci": "山姆·安東納奇","Enzo Hayashida": "恩佐·早岐田","Miles Mastrobuoni": "邁爾斯·馬斯特布奧尼","Alek Jacob": "艾力克·雅各布",
-"Hector Villarroel": "赫克托·維拉羅埃爾","Juremi Profar": "裘列米·普羅法爾","Lars Huijer": "拉斯·胡耶爾","Austin Bergner": "奧斯汀·伯格納","Jordan Geber": "喬丹·傑柏",
-            "Yeong Chan You": "游永昌","Hyeong Jun So": "蘇炯俊","Washington Nationals": "華盛頓國民","Cayden Wallace": "凱登·華萊士",
-"Jordan Williams": "喬丹·威廉斯","Phillip Glasser": "菲利普·格拉瑟","Levi Jordan": "李維·喬丹","Brady Lindsly": "布雷迪·林斯利",
-"Marcus Brown": "馬庫斯·布朗","Elijah Green": "以利亞·格林","Leandro Pineda": "利安德羅·皮內達","Robert Hassell III": "羅伯特·哈塞爾三世",
-"Nathaniel Ochoa Leyva": "納撒尼爾·奧喬亞·萊瓦","Yohandy Morales": "約翰迪·莫拉萊斯","Daniel Hernandez": "丹尼爾·赫爾南德茲",
-"Keibert Ruiz": "凱伯特·魯伊茲","Brayan Cortesia": "布萊恩·科爾特西亞","Riley Adams": "萊利·亞當斯","Foster Griffin": "福斯特·格里芬",
-"Eduardo Rodriguez": "愛德華多·羅德里格斯","San Diego Padres": "聖地牙哥教士","Ryan Wideman": "萊恩·維德曼","Braedon Karpathios": "布雷登·卡帕提奧斯",
-"Rosman Verdugo": "羅斯曼·維爾杜戈","Lamar King Jr.": "拉馬爾·金小","Ryan Jackson": "萊恩·傑克森","Matt Ward": "馬特·沃德",
-"Kasen Wells": "凱森·威爾斯","Truitt Madonna": "崔特·麥當娜","Jorge Quintana": "喬治·昆塔納","Brendan Durfee": "布蘭登·德費",
-"Carson Tucker": "卡森·塔克","Los Angeles Angels": "洛杉磯天使","Yolmer Sánchez": "約爾默·桑切斯","Nick Morabito": "尼克·莫拉比托",
-"Jeimer Candelario": "賈梅爾·坎德拉里歐","Renzo Martini": "連佐·馬丁尼","Trey Mancini": "崔·曼西尼","Raudi Rodriguez": "勞迪·羅德里格斯",
-"Andrew Fischer": "安德魯·費舍爾","Donovan Walton": "多諾萬·沃爾頓","Denzer Guzman": "登澤爾·古茲曼","J.J. D'Orazio": "J.J. 多拉齊歐",
-"LeTrey McCollum": "勒崔·麥考蘭","Nelson Rada": "尼爾森·拉達","Kyren Paris": "凱倫·帕里斯","Sam Bachman": "山姆·巴赫曼",
-"Camden Minacci": "坎登·米納奇","Colorado Rockies": "科羅拉多落磯","Ethan Holliday": "伊桑·霍利戴","Zac Veen": "查克·維恩",
-"Aidan Longwell": "艾登·朗威爾","Chad Stevens": "查德·史蒂文斯","Jacob Humphrey": "雅各布·漢弗萊","Troy Johnston": "特羅伊·約翰斯頓",
-"Drew Avans": "德魯·亞凡斯","Nic Kent": "尼克·肯特","Kyle McCann": "凱爾·麥肯","Roc Riggio": "羅克·瑞吉歐",
-"Charlie Condon": "查理·康登","Tommy Hopfe": "湯米·霍普菲","Vimael Machín": "維瑪爾·馬欽","Caleb Hobson": "凱勒布·霍布森",
-"Nicky Lopez": "尼基·洛佩茲","GJ Hill": "GJ·希爾","Brett Sullivan": "布雷特·沙利文","Carson Skipper": "卡森·斯基珀",
-"Gabriel Hughes": "加布里埃爾·休斯","Texas Rangers": "德州遊騎兵","Andrew Velazquez": "安德魯·維拉斯克斯","Nick Pratto": "尼克·普拉托",
-"Cameron Cauley": "卡麥隆·考利","Willie MacIver": "威利·麥基弗","Jonah Bride": "喬納·布萊德","Marcos Torres": "馬科斯·托雷斯",
-"Hector Osorio": "埃克托·奧索里奧","Matheus Silva": "馬修斯·席爾瓦","Paulino Santana": "保利諾·桑塔納","Aaron Zavala": "亞倫·薩瓦拉",
-"Kumar Rocker": "庫馬·羅克","Vitor Takahashi": "維托·高橋","Cincinnati Reds": "辛辛那提紅人","Michael Trautwein": "邁克爾·特勞特韋因",
-"Will Benson": "威爾·本森","Christian Rodriguez": "克里斯蒂安·羅德里格斯","JJ Bleday": "J.J. 布雷迪","Yoel Yanqui": "約爾·揚基",
-"Nathaniel Lowe": "納撒尼爾·洛維","Garrett Hampson": "加勒特·漢普森","Andrys Perez": "安德里斯·佩雷斯","Rece Hinds": "雷斯·海因茲",
-"Alexei Ramirez": "亞歷克塞·拉米瑞茲","Christian Encarnacion-Strand": "克里斯蒂安·恩卡納西翁－斯特蘭德","Blake Dunn": "布雷克·鄧恩",
-"Alexander Vargas": "亞歷山大·巴爾加斯","Leo Balcazar": "里奧·巴爾卡薩","Rhett Lowder": "雷特·勞德","Julio Robaina": "胡里奧·羅拜納",
-"Los Angeles Dodgers": "洛杉磯道奇","Ryan Ward": "萊恩·沃德","Alfredo Hurtado": "阿爾弗雷多·胡塔多","Elijah Hainline": "以利亞·海恩萊恩",
-"Joey Meneses": "喬伊·梅內塞斯","Joe Vetrano": "喬·維特拉諾","Alexis Wilson": "亞歷克西斯·威爾遜","Eduardo Quintero": "愛德華多·金特羅",
-"Santiago Chávez": "聖地牙哥·查韋斯","Kendall George": "肯達爾·喬治","Mateo Gil": "馬泰奧·吉爾","Griffin Lockwood-Powell": "格里芬·洛克伍德-鮑威爾",
-"Julian Ornelas": "朱利安·奧內拉斯","Kyle Nevin": "凱爾·內文","Zyhir Hope": "賽希爾·霍普","Alejandro Osuna": "亞歷山德羅·奧蘇納",
-"Austin Gauthier": "奧斯汀·戈希耶","Jack Dreyer": "傑克·德萊爾","Luis Miranda": "路易斯·米蘭達","Ben Casparius": "本·卡斯帕留斯",
-"Detroit Tigers": "底特律老虎","Gage Workman": "蓋奇·沃克曼","Sócrates Brito": "索克拉提斯·布里托","Seth Stephenson": "賽斯·史蒂芬森",
-"Ben Malgeri": "本·馬爾格里","John Peck": "約翰·佩克","Chris Meyers": "克里斯·邁爾斯","Oneil Cruz": "奧尼爾·克魯茲",
-"Jack Penney": "傑克·佩尼","Michael De La Cruz": "邁克爾·德拉克魯茲","Bennett Lee": "班奈特·李","Ricardo Cespedes": "里卡多·塞斯佩德斯",
-"Woody Hadeen": "伍迪·哈丁","Michael De León": "邁克爾·德里昂","Sergio Tapia": "塞爾吉奧·塔皮亞","Pedro Severino": "佩德羅·塞維里諾",
-"New York Mets": "紐約大都會","Shawn Goosenberg": "肖恩·古森伯格","Chris Suero": "克里斯·蘇埃羅","Assaf Lowengart": "阿薩夫·洛文加特",
-"Jose Rojas": "何塞·羅哈斯","Benjamin Rosengard": "班傑明·羅森加德","Ji Hwan Bae": "裴志煥","Hayden Senger": "海登·森格",
-"Jacob Reimer": "雅各布·雷默","Yonny Hernández": "約尼·赫南德斯","C.J. Stubbs": "C.J. 史塔布斯","Yohairo Cuevas": "約海羅·奎瓦斯",
-"Colby Halter": "考爾比·哈特","Wyatt Young": "懷亞特·楊","Jason Agresti": "傑森·阿格雷斯蒂","Austin Barnes": "奧斯汀·巴恩斯",
-"Nick Burdi": "尼克·伯迪","Saul Garcia": "索爾·加西亞","Philadelphia Phillies": "費城費城人","Felix Reyes": "費利克斯·雷耶斯",
-"Owen Gregg": "歐文·格雷格","Dylan Campbell": "迪蘭·坎貝爾","Carson DeMartini": "卡森·德馬蒂尼","Keaton Anthony": "基頓·安東尼",
-"Caleb Ricketts": "凱勒布·里凱茲","Aroon Escobar": "阿隆·埃斯科巴","Pedro León": "佩德羅·萊昂","René Pinto": "雷內·平托",
-"Jay Harry": "傑伊·哈利","Christian Cairo": "克里斯蒂安·開羅","Jonathan Bowlan": "喬納森·鮑蘭","Atlanta Braves": "亞特蘭大勇士",
-"Ambioris Tavarez": "安比奧里斯·塔瓦雷茲","Kyle Farmer": "凱爾·法默","Alex Lodise": "亞歷克斯·洛迪斯","Yamvier Carrero": "雅姆維爾·卡雷羅",
-"Diego Tornes": "迭戈·托尼斯","John Gil": "約翰·吉爾","Ethan Workinger": "伊桑·沃爾金格","Patrick Clohisy": "帕特里克·克洛希西",
-"Luis Guanipa": "路易斯·瓜尼帕","Drew Compton": "德魯·康普頓","Luke Williams": "盧克·威廉斯","Elieser Hernández": "埃里塞爾·赫爾南德斯",
-"Luis Patiño": "路易斯·帕蒂尼奧","Tampa Bay Rays": "坦帕灣光芒","Jhon Diaz": "約翰·迪亞茲","Connor Hujsak": "康納·胡傑克",
-"Delano Selassa": "德拉諾·塞拉薩","Jose Perez": "何塞·佩雷斯","Ricardo Gonzalez": "里卡多·岡薩雷斯","Brayden Taylor": "布雷登·泰勒",
-"Jose Monzon": "何塞·蒙宗","Tatem Levins": "塔特姆·列文斯","Dom Keegan": "多姆·基根","Edward Olivares": "愛德華·奧利瓦雷斯",
-"Sharlon Schoop": "沙龍·斯庫普","Gregory Barrios": "格雷戈里·巴里奧斯","Jacob Kmatz": "雅各布·克馬茨","Xavier Isaac": "澤維爾·艾薩克",
-"Narciso Polanco": "納西索·波蘭科","Jamdrick Cornelia": "贊德里克·科內利亞","Jake Woodford": "傑克·伍德福德","St. Louis Cardinals": "聖路易斯紅雀",
-"Kenly Hunter": "肯利·亨特","Andy Yerzy": "安迪·耶爾茲","Ryan Mitchell": "萊恩·米契爾","Rainiel Rodriguez": "雷尼爾·羅德里格斯",
-"Deniel Ortiz": "丹尼爾·奧爾蒂斯","Bligh Madris": "布萊·馬德里斯","Ian Petrutz": "伊恩·佩特魯茨","Jack Gurevitch": "傑克·居雷維奇",
-"Jon Jon Gazdar": "喬恩·喬恩·加茲達","Yairo Padilla": "耶羅·帕迪亞","JC Ramírez": "J.C. 拉米瑞茲","Matthew Liberatore": "馬修·利貝拉托",
-"Christian Worley": "克里斯蒂安·沃利","Nick Dumesnil": "尼克·杜梅斯尼爾","Andrew Jenkins": "安德魯·詹金斯","Cal Stevenson": "凱爾·史蒂文森",
-"Dillon Dingler": "迪隆·丁格勒","Max Burt": "麥克斯·伯特","Roberto Campos": "羅伯托·坎波斯","Rubén Tejada": "魯賓·特哈達",
-"Carson Rucker": "卡森·拉克","Enrique Bradfield Jr.": "恩里克·布拉德菲爾德小","Samuel Gil": "塞繆爾·吉爾","Eduardo Valencia": "愛德華多·瓦倫西亞",
-"Jack Flaherty": "傑克·弗拉赫蒂","Keider Montero": "凱德·蒙特羅","Minnesota Twins": "明尼蘇達雙城","Emmanuel Rodriguez": "伊曼紐爾·羅德里格斯",
-"Kala'i Rosario": "卡拉伊·羅薩里奧","Kyler Fedko": "凱勒·費德科","Gabriel Gonzalez": "加布里埃爾·岡薩雷斯","Luis Hernandez": "路易斯·赫南德茲",
-"David Bañuelos": "大衛·巴涅洛斯","Yasser Mercedes": "亞塞爾·梅爾塞德斯","Kaelen Culpepper": "凱倫·卡爾佩珀","Hendry Mendez": "亨德里·門德斯",
-"Tanner Schobel": "坦納·斯科貝爾","Billy Amick": "比利·阿米奇","Zebby Matthews": "澤比·馬修斯","Raymond Burgos": "雷蒙德·布爾戈斯",
+            "Zach Levenson": "扎克·萊文森","Eugenio Suárez": "尤金尼奧·蘇亞雷斯","Garrett Stubbs": "加勒特·斯塔布斯","Anthony Molina": "莫里納",
+            "Matt Mervis": "麥特·梅維斯","Jake Gelof": "傑克·傑洛夫","Noah Mendlinger": "諾亞·孟德林格","Darell Hernaiz": "達瑞爾·赫爾奈茲",
+            "Johan Camargo": "約翰·卡馬戈","Christian Vázquez": "克里斯蒂安·巴斯克斯","Sam Antonacci": "山姆·安東納奇","Enzo Hayashida": "恩佐·林田",
+            "Miles Mastrobuoni": "邁爾斯·馬斯特布奧尼","Hector Villarroel": "赫克托·維拉羅埃爾",
+            "Lars Huijer": "拉斯·惠耶爾","Tyler Viza": "泰勒·維薩",  "Jose Espada": "何塞．埃斯帕達",
+            "Justin Wylie": "賈斯汀·懷利","Ariel Jurado": "亞利爾·胡拉多", "Luis Castillo": "路易斯·卡斯蒂略",
+            "Jordan Geber": "喬丹·傑柏", "Yeong Chan You": "游永昌","Hyeong Jun So": "蘇炯俊","Washington Nationals": "華盛頓國民","Cayden Wallace": "凱登·華萊士",
+            "Jordan Williams": "喬丹·威廉斯","Phillip Glasser": "菲利普·格拉瑟","Levi Jordan": "李維·喬丹","Brady Lindsly": "布雷迪·林斯利",
+            "Marcus Brown": "馬庫斯·布朗","Elijah Green": "以利亞·格林","Leandro Pineda": "利安德羅·皮內達","Robert Hassell III": "羅伯特·哈塞爾三世",
+            "Nathaniel Ochoa Leyva": "納撒尼爾·奧喬亞·萊瓦","Yohandy Morales": "約翰迪·莫拉萊斯","Daniel Hernandez": "丹尼爾·赫爾南德茲",
+            "Keibert Ruiz": "凱伯特·魯伊茲","Brayan Cortesia": "布萊恩·科爾特西亞","Riley Adams": "萊利·亞當斯","Foster Griffin": "福斯特·格里芬",
+            "Eduardo Rodriguez": "愛德華多·羅德里格斯","San Diego Padres": "聖地牙哥教士","Ryan Wideman": "萊恩·維德曼","Braedon Karpathios": "布雷登·卡帕提奧斯",
+            "Rosman Verdugo": "羅斯曼·維爾杜戈","Lamar King Jr.": "拉馬爾·金小","Ryan Jackson": "萊恩·傑克森","Matt Ward": "馬特·沃德",
+            "Kasen Wells": "凱森·威爾斯","Truitt Madonna": "崔特·麥當娜","Jorge Quintana": "喬治·昆塔納","Brendan Durfee": "布蘭登·德費",
+            "Carson Tucker": "卡森·塔克","Los Angeles Angels": "洛杉磯天使","Yolmer Sánchez": "約爾默·桑切斯","Nick Morabito": "尼克·莫拉比托",
+            "Jeimer Candelario": "賈梅爾·坎德拉里歐","Renzo Martini": "連佐·馬丁尼","Trey Mancini": "崔·曼西尼","Raudi Rodriguez": "勞迪·羅德里格斯",
+            "Andrew Fischer": "安德魯·費舍爾","Donovan Walton": "多諾萬·沃爾頓","Denzer Guzman": "登澤爾·古茲曼","J.J. D'Orazio": "J.J. 多拉齊歐",
+            "LeTrey McCollum": "勒崔·麥考蘭","Nelson Rada": "尼爾森·拉達","Kyren Paris": "凱倫·帕里斯","Sam Bachman": "山姆·巴赫曼",
+            "Camden Minacci": "坎登·米納奇","Colorado Rockies": "科羅拉多落磯","Ethan Holliday": "伊桑·霍利戴","Zac Veen": "查克·維恩",
+            "Aidan Longwell": "艾登·朗威爾","Chad Stevens": "查德·史蒂文斯","Jacob Humphrey": "雅各布·漢弗萊","Troy Johnston": "特羅伊·約翰斯頓",
+            "Drew Avans": "德魯·亞凡斯","Nic Kent": "尼克·肯特","Kyle McCann": "凱爾·麥肯","Roc Riggio": "羅克·瑞吉歐",
+            "Charlie Condon": "查理·康登","Tommy Hopfe": "湯米·霍普菲","Vimael Machín": "維瑪爾·馬欽","Caleb Hobson": "凱勒布·霍布森",
+            "Nicky Lopez": "尼基·洛佩茲","GJ Hill": "GJ·希爾","Brett Sullivan": "布雷特·沙利文","Carson Skipper": "卡森·斯基珀",
+            "Gabriel Hughes": "加布里埃爾·休斯","Texas Rangers": "德州遊騎兵","Andrew Velazquez": "安德魯·維拉斯克斯","Nick Pratto": "尼克·普拉托",
+            "Cameron Cauley": "卡麥隆·考利","Willie MacIver": "威利·麥基弗","Jonah Bride": "喬納·布萊德","Marcos Torres": "馬科斯·托雷斯",
+            "Hector Osorio": "埃克托·奧索里奧","Matheus Silva": "馬修斯·席爾瓦","Paulino Santana": "保利諾·桑塔納","Aaron Zavala": "亞倫·薩瓦拉",
+            "Kumar Rocker": "庫馬·羅克","Vitor Takahashi": "維托·高橋","Cincinnati Reds": "辛辛那提紅人","Michael Trautwein": "邁克爾·特勞特韋因",
+            "Will Benson": "威爾·本森","Christian Rodriguez": "克里斯蒂安·羅德里格斯","JJ Bleday": "J.J. 布雷迪","Yoel Yanqui": "約爾·揚基",
+            "Nathaniel Lowe": "納撒尼爾·洛維","Garrett Hampson": "加勒特·漢普森","Andrys Perez": "安德里斯·佩雷斯","Rece Hinds": "雷斯·海因茲",
+            "Alexei Ramirez": "亞歷克塞·拉米瑞茲","Christian Encarnacion-Strand": "克里斯蒂安·恩卡納西翁－斯特蘭德","Blake Dunn": "布雷克·鄧恩",
+            "Alexander Vargas": "亞歷山大·巴爾加斯","Leo Balcazar": "里奧·巴爾卡薩","Rhett Lowder": "雷特·勞德","Julio Robaina": "胡里奧·羅拜納",
+            "Los Angeles Dodgers": "洛杉磯道奇","Ryan Ward": "萊恩·沃德","Alfredo Hurtado": "阿爾弗雷多·胡塔多","Elijah Hainline": "以利亞·海恩萊恩",
+            "Joey Meneses": "喬伊·梅內塞斯","Joe Vetrano": "喬·維特拉諾","Alexis Wilson": "亞歷克西斯·威爾遜","Eduardo Quintero": "愛德華多·金特羅",
+            "Santiago Chávez": "聖地牙哥·查韋斯","Kendall George": "肯達爾·喬治","Mateo Gil": "馬泰奧·吉爾","Griffin Lockwood-Powell": "格里芬·洛克伍德-鮑威爾",
+            "Julian Ornelas": "朱利安·奧內拉斯","Kyle Nevin": "凱爾·內文","Zyhir Hope": "賽希爾·霍普","Alejandro Osuna": "亞歷山德羅·奧蘇納",
+            "Austin Gauthier": "奧斯汀·戈希耶","Jack Dreyer": "傑克·德萊爾","Luis Miranda": "路易斯·米蘭達","Ben Casparius": "本·卡斯帕留斯",
+            "Detroit Tigers": "底特律老虎","Gage Workman": "蓋奇·沃克曼","Sócrates Brito": "索克拉提斯·布里托","Seth Stephenson": "賽斯·史蒂芬森",
+            "Ben Malgeri": "本·馬爾格里","John Peck": "約翰·佩克","Chris Meyers": "克里斯·邁爾斯","Oneil Cruz": "奧尼爾·克魯茲",
+            "Jack Penney": "傑克·佩尼","Michael De La Cruz": "邁克爾·德拉克魯茲","Bennett Lee": "班奈特·李","Ricardo Cespedes": "里卡多·塞斯佩德斯",
+            "Woody Hadeen": "伍迪·哈丁","Michael De León": "邁克爾·德里昂","Sergio Tapia": "塞爾吉奧·塔皮亞","Pedro Severino": "佩德羅·塞維里諾",
+            "New York Mets": "紐約大都會","Shawn Goosenberg": "肖恩·古森伯格","Chris Suero": "克里斯·蘇埃羅","Assaf Lowengart": "阿薩夫·洛文加特",
+            "Jose Rojas": "何塞·羅哈斯","Benjamin Rosengard": "班傑明·羅森加德","Ji Hwan Bae": "裴志煥","Hayden Senger": "海登·森格",
+            "Jacob Reimer": "雅各布·雷默","Yonny Hernández": "約尼·赫南德斯","C.J. Stubbs": "C.J. 史塔布斯","Yohairo Cuevas": "約海羅·奎瓦斯",
+            "Colby Halter": "考爾比·哈特","Wyatt Young": "懷亞特·楊","Jason Agresti": "傑森·阿格雷斯蒂","Austin Barnes": "奧斯汀·巴恩斯",
+            "Nick Burdi": "尼克·伯迪","Saul Garcia": "索爾·加西亞","Philadelphia Phillies": "費城費城人","Felix Reyes": "費利克斯·雷耶斯",
+            "Owen Gregg": "歐文·格雷格","Dylan Campbell": "迪蘭·坎貝爾","Carson DeMartini": "卡森·德馬蒂尼","Keaton Anthony": "基頓·安東尼",
+            "Caleb Ricketts": "凱勒布·里凱茲","Aroon Escobar": "阿隆·埃斯科巴","Pedro León": "佩德羅·萊昂","René Pinto": "雷內·平托",
+            "Jay Harry": "傑伊·哈利","Christian Cairo": "克里斯蒂安·開羅","Jonathan Bowlan": "喬納森·鮑蘭","Atlanta Braves": "亞特蘭大勇士",
+            "Ambioris Tavarez": "安比奧里斯·塔瓦雷茲","Kyle Farmer": "凱爾·法默","Alex Lodise": "亞歷克斯·洛迪斯","Yamvier Carrero": "雅姆維爾·卡雷羅",
+            "Diego Tornes": "迭戈·托尼斯","John Gil": "約翰·吉爾","Ethan Workinger": "伊桑·沃爾金格","Patrick Clohisy": "帕特里克·克洛希西",
+            "Luis Guanipa": "路易斯·瓜尼帕","Drew Compton": "德魯·康普頓","Luke Williams": "盧克·威廉斯","Elieser Hernández": "埃里塞爾·赫爾南德斯",
+            "Luis Patiño": "路易斯·帕蒂尼奧","Tampa Bay Rays": "坦帕灣光芒","Jhon Diaz": "約翰·迪亞茲","Connor Hujsak": "康納·胡傑克",
+            "Delano Selassa": "德拉諾·塞拉薩","Jose Perez": "何塞·佩雷斯","Ricardo Gonzalez": "里卡多·岡薩雷斯","Brayden Taylor": "布雷登·泰勒",
+            "Jose Monzon": "何塞·蒙宗","Tatem Levins": "塔特姆·列文斯","Dom Keegan": "多姆·基根","Edward Olivares": "愛德華·奧利瓦雷斯",
+            "Sharlon Schoop": "沙龍·斯庫普","Gregory Barrios": "格雷戈里·巴里奧斯","Jacob Kmatz": "雅各布·克馬茨","Xavier Isaac": "澤維爾·艾薩克",
+            "Narciso Polanco": "納西索·波蘭科","Jamdrick Cornelia": "贊德里克·科內利亞","Jake Woodford": "傑克·伍德福德","St. Louis Cardinals": "聖路易斯紅雀",
+            "Kenly Hunter": "肯利·亨特","Andy Yerzy": "安迪·耶爾茲","Ryan Mitchell": "萊恩·米契爾","Rainiel Rodriguez": "雷尼爾·羅德里格斯",
+            "Deniel Ortiz": "丹尼爾·奧爾蒂斯","Bligh Madris": "布萊·馬德里斯","Ian Petrutz": "伊恩·佩特魯茨","Jack Gurevitch": "傑克·居雷維奇",
+            "Jon Jon Gazdar": "喬恩·喬恩·加茲達","Yairo Padilla": "耶羅·帕迪亞","JC Ramírez": "J.C. 拉米瑞茲","Matthew Liberatore": "馬修·利貝拉托",
+            "Christian Worley": "克里斯蒂安·沃利","Nick Dumesnil": "尼克·杜梅斯尼爾","Andrew Jenkins": "安德魯·詹金斯","Cal Stevenson": "凱爾·史蒂文森",
+            "Dillon Dingler": "迪隆·丁格勒","Max Burt": "麥克斯·伯特","Roberto Campos": "羅伯托·坎波斯","Rubén Tejada": "魯賓·特哈達",
+            "Carson Rucker": "卡森·拉克","Enrique Bradfield Jr.": "恩里克·布拉德菲爾德小","Samuel Gil": "塞繆爾·吉爾","Eduardo Valencia": "愛德華多·瓦倫西亞",
+            "Jack Flaherty": "傑克·弗拉赫蒂","Keider Montero": "凱德·蒙特羅","Minnesota Twins": "明尼蘇達雙城","Emmanuel Rodriguez": "伊曼紐爾·羅德里格斯",
+            "Kala'i Rosario": "卡拉伊·羅薩里奧","Kyler Fedko": "凱勒·費德科","Gabriel Gonzalez": "加布里埃爾·岡薩雷斯","Luis Hernandez": "路易斯·赫南德茲",
+            "David Bañuelos": "大衛·巴涅洛斯","Yasser Mercedes": "亞塞爾·梅爾塞德斯","Kaelen Culpepper": "凱倫·卡爾佩珀","Hendry Mendez": "亨德里·門德斯",
+            "Tanner Schobel": "坦納·斯科貝爾","Billy Amick": "比利·阿米奇","Zebby Matthews": "澤比·馬修斯", "Raymond Burgos": "雷蒙德·布爾戈斯",
             "Julio Rodríguez": "J.羅德里奎茲", "Julio Rodriguez": "J.羅德里奎茲", "Sandy Alcantara": "阿坎塔拉", 
             "Jeremy Peña": "潘尼亞", "Jeremy Pena": "潘尼亞", "Fernando Tatis Jr.": "小塔提斯", "Teoscar Hernández": "赫南德茲",
             "Teoscar Hernandez": "赫南德茲", "Emmanuel Clase": "克拉塞", "Framber Valdez": "瓦德茲",
@@ -340,8 +317,6 @@
             "Luis Robert Jr.": "羅伯特", "Yoán Moncada": "蒙卡達", "Yoan Moncada": "蒙卡達", "Randy Arozarena": "阿羅薩雷納",
             "Liván Moinelo": "莫伊內洛", "Livan Moinelo": "莫伊內洛", "Raidel Martinez": "馬丁尼茲",
             "Martin Muzik": "穆吉克", "Martin Cervinka": "切爾文卡", "Robbie Glendinning": "葛蘭丁寧", "Antwone Kelly": "凱利",
-
-            // ================= 🇺🇸 美國隊 (USA) 2026 夢幻隊 =================
             "United States": "美國", "Paul Goldschmidt": "高施密特", "Bryce Harper": "哈波", "Gunnar Henderson": "韓德森",
             "Brice Turang": "圖朗", "David Bednar": "貝納", "Matthew Boyd": "博伊德",
             "Garrett Cleavinger": "克里文格", "Clay Holmes": "霍姆斯", "Griffin Jax": "傑克斯",
@@ -352,8 +327,6 @@
             "Michael Wacha": "瓦查", "Logan Webb": "韋伯", "Garrett Whitlock": "惠特洛克",
             "Bobby Witt Jr.": "小威特", "Alex Bregman": "布萊格曼", "Byron Buxton": "巴克斯頓",
             "Corbin Carroll": "卡洛爾", "Pete Crow-Armstrong": "克勞-阿姆斯壯", "Ryan Yarbrough": "亞布羅",
-
-            // ================= 🇨🇦 加拿大隊 (Canada) =================
             "Logan Allen": "艾倫", "Micah Ashman": "艾許曼", "Phillippe Aumont": "奧蒙特", 
             "Jordan Balazovic": "巴拉佐維奇", "Eric Cerantola": "塞蘭托拉", "Indigo Diaz": "迪亞茲", 
             "Brock Dykxhoorn": "布雷克", "Antoine Jean": "尚恩", "Carter Loewen": "洛文", 
@@ -365,8 +338,6 @@
             "Josh Naylor": "喬許·奈勒", "Abraham Toro": "托羅", "Owen Caissie": "凱西", 
             "Denzel Clarke": "克拉克", "Tyler O'Neill": "歐尼爾", "Jacob Robson": "羅布森", 
             "Jared Young": "楊恩",
-
-            // ================= 🇨🇴 哥倫比亞隊 (Colombia) =================
             "Adrian Almeida": "阿爾梅達", "Danis Correa": "柯瑞亞", "Nabil Crismatt": "克里斯馬特", 
             "Luis Escobar": "艾斯科巴", "Pedro Garcia": "賈西亞", "Rio Gomez": "R.戈梅茲", 
             "Yapson Gomez": "Y.戈梅茲", "Jean Herrera": "J.赫雷拉", "David Lorduy": "洛爾杜伊", 
@@ -380,16 +351,11 @@
             "Donovan Solano": "索拉諾", "Brayan Buelvas": "布威爾瓦斯", "Dilson Herrera": "D.赫雷拉", 
             "Jesus Marriaga": "馬里亞加", "Oscar Mercado": "梅卡多", "Harold Ramirez": "H.拉米瑞茲", 
             "Gustavo Campero": "坎佩羅",
-
-            // ================= 🇧🇷 巴西隊 (Brazil) =================
             "Brazil": "巴西", "Gabriel Barbosa": "巴波薩", "Pedro Da Costa Lemos": "萊莫斯", "Daniel Missaki": "米薩基",
             "Eric Pardinho": "帕迪尼奧", "Thyago Vieira": "薇耶拉", "Bo Takahashi": "高橋波",
             "Leonardo Reginatto": "瑞吉納托", "Lucas Ramirez": "拉米瑞茲", "Dante Bichette Jr.": "小比切特",
             "Victor Coutinho": "庫蒂尼奧", "Vitor Ito": "伊藤", "Tiago da Silva": "達席爾瓦",
             "Dylan Lee": "狄倫·李", "Gabriel Maciel": "馬希爾", "Osvaldo Carvalho": "卡瓦略",
-
-            // ================= 🇦🇺 澳洲隊 (Australia) 2026 最終30人名單 =================
-            "Australia": "澳洲", 
             "Alex Wells": "A.威爾斯", "Lachlan Wells": "L.威爾斯", "Todd Van Steensel": "范史汀塞爾",
             "Mitch Neunborn": "紐柏恩", "Ky Hampton": "漢普頓", "Warwick Saupold": "索波德",
             "Jack O'Loughlin": "歐洛林", "Coen Wynne": "溫恩", "Connor MacDonald": "麥克唐納",
@@ -400,51 +366,18 @@
             "George Callil": "卡里爾", "Jarryd Dale": "戴爾", "Rixon Wingrove": "溫格羅夫",
             "Travis Bazzana": "巴札納", "Aaron Whitefield": "懷特菲爾德", "Tim Kennelly": "肯內利",
             "Ulrich Bojarski": "波亞斯基", "Chris Burke": "柏克", "Max Durrington": "德林頓",
-
-            // ================= 🇨🇿 捷克隊 (Czechia) =================
-            // 投手群
-            "Czechia": "捷克", "Jeff Barto": "巴托", "Filip Capka": "查普卡", "Tomas Duffek": "杜菲克", 
+            "Jeff Barto": "巴托", "Filip Capka": "查普卡", "Tomas Duffek": "杜菲克", 
             "Lukas Ercoli": "艾爾柯利", "Lukas Hlouch": "赫勞奇", "Filip Kollmann": "柯爾曼", 
             "Michal Kovala": "科瓦拉", "Marek Minarik": "米納里克", "Jan Novak": "諾瓦克", 
             "Tomas Ondra": "翁德拉", "Daniel Padysak": "帕迪沙克", "Ondrej Satoria": "薩托利亞", 
             "Martin Schneider": "施奈德", "Ondrej Vank": "凡克", "Boris Vecerka": "維切爾卡",
-            // 捕手群
             "Matous Bubenik": "布貝尼克", "Martin Cervenka": "切爾文卡", "Martin Zelenka": "澤倫卡",
-            // 內野手
             "Martin Cervinka": "切爾文卡", "Vojtech Mensik": "曼西克", "Matej Mensik": "曼西克",
             "Martin Muzik": "穆吉克", "Jan Pospisil": "波斯皮西爾", "Milan Prokop": "普羅柯普", 
             "Terrin Vavra": "瓦弗拉", "Ryan Johnson": "強森", "William Escala": "艾斯卡拉", 
             "Willie Escala": "艾斯卡拉",
-            // 外野手
             "Marek Krejcirik": "克雷契里克", "Marek Chlup": "赫魯普", "Max Prejda": "普雷伊達", 
             "Michal Sindelka": "辛德爾卡",
-
-            // ================= 🇰🇷 韓國隊 (Korea) 2026 正式30人名單 =================
-            "Korea": "韓國", 
-            // 投手 (15人)
-            "Young-pyo Ko": "高永表", "Youngpyo Ko": "高永表", "Woo-suk Go": "高佑錫", "Woosuk Go": "高佑錫",
-            "Been Gwak": "郭彬", "Yeong-hyeon Park": "朴英賢", "Yeonghyun Park": "朴英賢", 
-            "Tae-in Won": "元兌仁", "Taein Won": "元兌仁", "Taec-Yeon Kim": "金澤延", "Taecyeon Kim": "金澤延",
-            "Byeong-hyeon Jo": "趙丙炫", "Jo Byeong-Hyeon": "趙丙炫", "Young-kyu Kim": "金榮奎", "Youngkyu Kim": "金榮奎",
-            "Ju-Yeong Son": "孫珠英", "Juyoung Son": "孫珠英", "Ju-young Son": "孫珠英",
-            "Hyeong-jun So": "蘇珩準", "Hyeongjun So": "蘇珩準", "Dane Dunning": "唐寧",
-            "Kyung-eun Noh": "盧景銀", "Kyungeun Noh": "盧景銀", "Young-chan You": "劉泳澯", "Youngchan You": "劉泳澯",
-            "Woo-joo Jeong": "鄭宇宙", "Woojoo Jeong": "鄭宇宙", "Seung-Ki Song": "宋承基", "Seungki Song": "宋承基", 
-            "Seung-ki Song": "宋承基", "Hyun-jin Ryu": "柳賢振", "Hyunjin Ryu": "柳賢振", "Ryu Hyun-jin": "柳賢振",
-            "Riley O'Brien": "歐布萊恩", "Riley Obrien": "歐布萊恩",
-            // 捕手 (2人)
-            "Hyung-jun Kim": "金亨俊", "Hyeongjun Kim": "金亨俊", "Dong-won Park": "朴東原", "Dongwon Park": "朴東原",
-            // 內野手 (7人)
-            "Do-Yeong Kim": "金倒永", "Doyeong Kim": "金倒永", "Bo-gyeong Moon": "文保景", "Bogyeong Moon": "文保景",
-            "Hye-Seong Kim": "金慧成", "Hyeseong Kim": "金慧成", "Min-jae Shin": "申珉宰", "Minjae Shin": "申珉宰",
-            "Ju-won Kim": "金周元", "Juwon Kim": "金周元", "Si-hwan Roh": "盧施煥", "Sihwan Roh": "盧施煥",
-            "Shay Whitcomb": "惠特坎",
-            // 外野手 (6人)
-            "Jung Hoo Lee": "李政厚", "Junghoo Lee": "李政厚", "Ja-wook Koo": "具滋昱", "Jawook Koo": "具滋昱",
-            "Jahmai Jones": "賈邁瓊斯", "Hae-min Park": "朴海旻", "Haemin Park": "朴海旻",
-            "Hyun-min Ahn": "安賢民", "Hyunmin Ahn": "安賢民", "Hyun-bin Moon": "文賢彬", "Hyunbin Moon": "文賢彬",
-
-            // ================= 🇳🇮 尼加拉瓜隊 (Nicaragua) =================
             "Nicaragua": "尼加拉瓜", "Kenword Burton": "伯頓", "Stiven Cruz": "克魯茲", "Osman Gutierrez": "古提瑞茲",
             "Duque Hebbert": "赫伯特", "Ronald Medrano": "梅德拉諾", "Dilmer Mejia": "梅西亞",
             "Angel Obando": "奧班多", "Erasmo Ramirez": "E.拉米瑞茲", "Erasmo Ramírez": "E.拉米瑞茲",
@@ -458,54 +391,36 @@
             "Cristhian Sandoval": "桑多瓦"
         };
 
-        // 🌟 n8n Webhook 網址 (請換成你 n8n 的 Production URL) 🌟
         const N8N_WEBHOOK_URL = "https://james15211521.zeabur.app/webhook/report-wbc-words"; 
 
-        // 讀取瀏覽器裡「已經通報過」的單字記憶 (避免重新整理後重複發送)
         let reportedWords = new Set(JSON.parse(localStorage.getItem('reportedWbcWords') || '[]'));
-        let pendingReport = new Set(); // 這次抓到準備要通報的新單字
+        let pendingReport = new Set();
 
         const translate = (name) => { 
             if (!name) return "無資料"; 
-            
-            // 1. 如果巨無霸字典裡有，直接給中文
-            if (translateDict[name]) {
-                return translateDict[name];
-            } 
-            
-            // 2. 如果字典沒有，且「這支手機之前沒通報過」，就加進待通報清單
-            if (!reportedWords.has(name) && !pendingReport.has(name)) {
-                pendingReport.add(name);
-            }
-            
-            return name; // 畫面上還是先顯示英文
+            if (translateDict[name]) return translateDict[name];
+            if (!reportedWords.has(name) && !pendingReport.has(name)) pendingReport.add(name);
+            return name; 
         };
 
-        // 🌟 批次傳送未知單字給 n8n 的函數 🌟
         function reportUnknownWords() {
-            if (pendingReport.size === 0) return; // 沒有新單字就不理他
-
+            if (pendingReport.size === 0) return;
             const wordsToReport = Array.from(pendingReport);
-            pendingReport.clear(); // 清空暫存清單
-
-            console.log("📝 發現未翻譯單字！正在發送給 n8n 記錄進 Google Sheets:", wordsToReport);
-
-            // 用「射後不理」的方式丟給 n8n，不影響網頁運作
+            pendingReport.clear();
+            console.log("📝 發現未翻譯單字！正在發送給 n8n:", wordsToReport);
             fetch(N8N_WEBHOOK_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ words: wordsToReport })
             }).catch(e => console.error("通報失敗:", e));
-
-            // 把這些字加進「已通報」的記憶體裡，並存入瀏覽器
             wordsToReport.forEach(w => reportedWords.add(w));
             localStorage.setItem('reportedWbcWords', JSON.stringify(Array.from(reportedWords)));
         }
 
+        // 🌟 老師的重構：既然都在字典裡了，就直接讓字典去替換，不需要寫死 replace 🌟
         const translatePlay = (text) => {
             if (!text) return "";
             let translated = text;
-            translated = translated.replace('strikes out swinging', '揮棒落空遭三振').replace('strikes out called', '站著不動遭三振').replace('walks', '獲得保送').replace('singles', '擊出一壘安打').replace('doubles', '擊出二壘安打').replace('triples', '擊出三壘安打').replace('homers', '轟出全壘打').replace('grounds out', '擊出滾地球出局').replace('flies out', '擊出飛球出局').replace('pops out', '擊出內野高飛球出局').replace('lines out', '擊出平飛球出局').replace('second baseman', '二壘手').replace('first baseman', '一壘手').replace('third baseman', '三壘手').replace('shortstop', '游擊手').replace('pitcher', '投手').replace('catcher', '捕手').replace(' to ', ' 傳給 ').replace('steals', '成功盜上').replace('caught stealing', '盜壘失敗遭觸殺').replace('wild pitch', '發生暴投');
             Object.keys(translateDict).forEach(engName => {
                 translated = translated.replace(new RegExp(engName, 'g'), translateDict[engName]);
             });
@@ -517,9 +432,7 @@
 
         function toggleMenu() {
             const menu = document.getElementById('date-menu');
-            if (!menu.classList.contains('open')) {
-                buildMenu(); 
-            }
+            if (!menu.classList.contains('open')) buildMenu(); 
             menu.classList.toggle('open');
         }
 
@@ -564,11 +477,9 @@
             
             const mainTitle = document.getElementById('main-title');
             if (dateVal === 'today') {
-                // 這裡改成 innerHTML，並放入 img 標籤
                 mainTitle.innerHTML = '<img src="wbc-logo.png" class="title-logo">WBC 戰情室 By 老杜';
             } else {
                 const parts = dateVal.split('-');
-                // 切換歷史賽程時，一樣用 innerHTML 放入圖片
                 mainTitle.innerHTML = `<img src="wbc-logo.png" class="title-logo">${parseInt(parts[1])}/${parseInt(parts[2])} 賽果 By 老杜`;
             }
 
@@ -579,7 +490,6 @@
         async function fetchWBCGames() {
             const container = document.getElementById('games-container');
             
-            // 💡 老爸的魔法記憶卡：在覆蓋畫面之前，先抄下目前哪些選單是打開的！
             const currentlyOpenGamePks = Array.from(document.querySelectorAll('details.final-details-toggle[open]'))
                                              .map(d => d.getAttribute('data-gamepk'));
 
@@ -622,27 +532,29 @@
                 for (const game of filteredGames) {
                     const awayTeam = translate(game.teams.away.team.name);
                     const homeTeam = translate(game.teams.home.team.name);
+                    
+                    // 🚨 老爸的 Bug 修復區：必須先把 statusCode 和 isLive 找出來，下面才能用！
+                    const statusCode = game.status.statusCode;
+                    const isLive = statusCode === 'I' || statusCode === 'PW';
+
                     // --- 獲勝隊伍亮眼呈現系統 ---
                     let awayScore = game.teams.away.score ?? '-';
                     let homeScore = game.teams.home.score ?? '-';
-                    let awayWinnerClass = ''; // 客隊的勝利樣式 (預設空的)
-                    let homeWinnerClass = ''; // 主隊的勝利樣式 (預設空的)
+                    let awayWinnerClass = ''; 
+                    let homeWinnerClass = ''; 
 
-                    // ✅ 判定條件：只有在「比賽結束」時才去抓贏家，LIVE 中不抓！
-                    if (!isLive && game.status.statusCode === 'F' && awayScore !== '-' && homeScore !== '-') {
-                        // 比較分數 (記得轉成數字，API 抓下來有時是字串)
+                    // ✅ 因為 isLive 已經被我們往上移了，所以這行不會再報錯！
+                    if (!isLive && statusCode === 'F' && awayScore !== '-' && homeScore !== '-') {
                         const aScore = parseInt(awayScore);
                         const hScore = parseInt(homeScore);
 
                         if (aScore > hScore) {
-                            awayWinnerClass = 'winner-team'; // 客隊贏了，套用樣式
+                            awayWinnerClass = 'winner-team';
                         } else if (hScore > aScore) {
-                            homeWinnerClass = 'winner-team'; // 主隊贏了，套用樣式
+                            homeWinnerClass = 'winner-team';
                         }
-                        // 如果平手 (例如熱身賽)，就不動
                     }
-                    const statusCode = game.status.statusCode;
-                    const isLive = statusCode === 'I' || statusCode === 'PW';
+                    
                     const inning = game.linescore ? `第 ${game.linescore.currentInning} 局 ${game.linescore.isTopInning ? '上' : '下'}` : '';
                     
                     const statusText = translate(game.status.detailedState);
@@ -717,9 +629,7 @@
                         const ls = game.linescore, off = ls.offense || {}, def = ls.defense || {};
                         const b1 = off.first ? 'active' : '', b2 = off.second ? 'active' : '', b3 = off.third ? 'active' : '';
                         
-                        // 👇 這裡幫你把圖示換成 🖐🏽 投手, 🏏 打者, 👉🏽 下位 了！ 👇
                         liveDetailsHtml = `<div class="live-details"><div class="field-status"><div class="bases"><div class="base second ${b2}"></div><div class="base-row"><div class="base third ${b3}"></div><div class="base first ${b1}"></div></div></div><div class="count"><div class="c-balls">B <span>${ls.balls || 0}</span></div><div class="c-strikes">S <span>${ls.strikes || 0}</span></div><div class="c-outs">O <span>${ls.outs || 0}</span></div></div></div><div class="player-info"><div class="player-row"><span class="label">🖐🏽 投手</span> <span class="name">${translate(def.pitcher?.fullName)}</span></div><div class="player-row"><span class="label">🏏 打者</span> <span class="name">${translate(off.batter?.fullName)}</span></div><div class="player-row"><span class="label">👉🏽 下位</span> <span class="name">${translate(off.onDeck?.fullName || '準備中')}</span></div></div></div>`;
-                        // 👆 圖示修改結束 👆
                     }
 
                     const boxscoreToUse = liveDataBoxscore || game.boxscore;
@@ -788,10 +698,7 @@
                         extraInfoHtml = `${pbpTextHtml}${liveDetailsHtml}${lineupHtml}`;
                     } else {
                         if (tvBoardHtml || pbpTextHtml || lineupHtml) {
-                            // 💡 老爸的魔法記憶卡：如果這個 gamePk 剛剛有被抄下來，就幫它加上 'open' 屬性！
                             const isOpen = currentlyOpenGamePks.includes(String(game.gamePk)) ? 'open' : '';
-                            
-                            // 加上 data-gamepk 屬性，讓程式認得這是哪一場比賽
                             extraInfoHtml = `<details class="final-details-toggle" data-gamepk="${game.gamePk}" ${isOpen}><summary>🔽 展開對戰結果與詳細賽況</summary><div class="toggle-content">${tvBoardHtml}${pbpTextHtml}${lineupHtml}</div></details>`;
                         }
                     }
@@ -814,7 +721,6 @@
                 }
                 
                 container.innerHTML = (liveGamesHtml + finalGamesHtml) || '<div class="loading">此日期無賽程資料</div>';
-         // 👇 新增這行：畫面更新完後，把沒看過的單字批次送給 n8n
                 reportUnknownWords();
 
             } catch (error) { console.error('API Error:', error); container.innerHTML = '<div class="loading">連線失敗，請檢查網路狀態。</div>'; }
@@ -837,34 +743,4 @@
         }, 5000); 
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
