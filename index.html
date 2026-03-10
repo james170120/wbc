@@ -145,6 +145,15 @@
         .tv-dec-name { width: 65%; padding: 6px 12px; color: #e0e0e0; font-size: 0.9rem; font-weight: bold; }
 
         .loading { text-align: center; color: #888; font-size: 1.1rem; padding: 20px; width: 100%;}
+    /* 🏳️‍🌈 真實國旗圖片樣式 */
+        .team-flag {
+            width: 1.3em; /* 大小跟著字體自動縮放 */
+            vertical-align: middle; /* 確保跟文字完美水平置中 */
+            margin-right: 6px;
+            margin-bottom: 3px;
+            border-radius: 3px; /* 給國旗加上一點高級的微圓角 */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5); /* 加上淡淡的陰影增加立體感 */
+        }
     </style>
 </head>
 <body>
@@ -447,15 +456,22 @@
             "Cristhian Sandoval": "桑多瓦",  "Josh Mallitz": "喬許·馬利茲","Matt Bowman": "馬特·鮑曼","Roel Ramírez": "羅爾·拉米雷茲",
             "James Gonzalez": "詹姆斯·岡薩雷茲",  "Jahmai Jones": "強梅瓊斯","Shay Whitcomb": "謝維康","Hyeseong Kim": "金慧成"
         };
-        // 🇹🇼 國旗 Emoji 產生器
+        // 🇹🇼 國旗產生器 (升級版：破解 Windows 系統限制，改用真實圖片)
         const getFlag = (teamName) => {
+            // 這裡換成國際標準的 2 碼英文代號
             const flags = {
-                "中華隊": "🇹🇼", "日本": "🇯🇵", "韓國": "🇰🇷", "澳洲": "🇦🇺", "美國": "🇺🇸", 
-                "古巴": "🇨🇺", "多明尼加": "🇩🇴", "委內瑞拉": "🇻🇪", "荷蘭": "🇳🇱", 
-                "波多黎各": "🇵🇷", "捷克": "🇨🇿", "加拿大": "🇨🇦", "哥倫比亞": "🇨🇴", 
-                "墨西哥": "🇲🇽", "巴西": "🇧🇷", "尼加拉瓜": "🇳🇮", "巴拿馬": "🇵🇦", "義大利": "🇮🇹"
+                "中華隊": "tw", "日本": "jp", "韓國": "kr", "澳洲": "au", "美國": "us", 
+                "古巴": "cu", "多明尼加": "do", "委內瑞拉": "ve", "荷蘭": "nl", 
+                "波多黎各": "pr", "捷克": "cz", "加拿大": "ca", "哥倫比亞": "co", 
+                "墨西哥": "mx", "巴西": "br", "尼加拉瓜": "ni", "巴拿馬": "pa", "義大利": "it"
             };
-            return flags[teamName] ? flags[teamName] + " " : "";
+            
+            const code = flags[teamName];
+            if (code) {
+                // 去 flagcdn 抓取高畫質國旗圖片，並套用剛剛寫的 .team-flag 樣式
+                return `<img src="https://flagcdn.com/w40/${code}.png" class="team-flag" alt="${teamName}">`;
+            }
+            return "";
         };
 
         // 🌟 n8n Webhook 網址 🌟
@@ -844,6 +860,7 @@
     </script>
 </body>
 </html>
+
 
 
 
