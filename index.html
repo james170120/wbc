@@ -452,7 +452,30 @@
             return flags[teamName] ? flags[teamName] + " " : "";
         };
 
+        // 🌟 n8n Webhook 網址 🌟
         const N8N_WEBHOOK_URL = "https://james15211521.zeabur.app/webhook/report-wbc-words"; 
+
+        // ================= 🌍 訪客 IP 打卡系統 🌍 =================
+        function trackVisitor() {
+            // 檢查這個分頁是不是第一次打開 (避免每 5 秒更新或切換日期時重複打卡)
+            if (!sessionStorage.getItem('wbc_visited')) {
+                console.log("👀 偵測到新訪客進場！正在發送打卡訊號給 n8n...");
+                
+                fetch(N8N_WEBHOOK_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    // 我們給它加上 type: "visit" 標籤，並給空的 words 陣列
+                    body: JSON.stringify({ type: "visit", words: [] })
+                }).catch(e => console.error("打卡連線失敗:", e));
+
+                // 標記為已打卡，這個分頁關閉前都不會再觸發
+                sessionStorage.setItem('wbc_visited', 'true');
+            }
+        }
+        
+        // 網頁一載入，立刻啟動打卡機！
+        trackVisitor(); 
+        // ========================================================== 
 
         let reportedWords = new Set(JSON.parse(localStorage.getItem('reportedWbcWords') || '[]'));
         let pendingReport = new Set();
@@ -815,6 +838,7 @@
     </script>
 </body>
 </html>
+
 
 
 
