@@ -480,7 +480,7 @@
         // ================= 🌍 訪客 IP 打卡系統 (防連發升級版) 🌍 =================
         function trackVisitor() {
             // 設定冷卻時間：這裡設為 60 分鐘 (60分鐘 * 60秒 * 1000毫秒)
-            const cooldownTime = 60 * 60 * 1000; 
+            const cooldownTime = 20 * 60 * 1000; 
             const now = new Date().getTime();
             const lastVisit = localStorage.getItem('wbc_last_visit_time');
 
@@ -866,6 +866,7 @@
     </script>
 </body>
 </html>
+
 
 
 
