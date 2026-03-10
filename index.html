@@ -517,7 +517,7 @@
             fetch(N8N_WEBHOOK_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ words: wordsToReport })
+                body: JSON.stringify({ type: "translate", words: wordsToReport }) // 這裡加上標籤以便未來區分
             }).catch(e => console.error("通報失敗:", e));
             wordsToReport.forEach(w => reportedWords.add(w));
             localStorage.setItem('reportedWbcWords', JSON.stringify(Array.from(reportedWords)));
@@ -860,6 +860,7 @@
     </script>
 </body>
 </html>
+
 
 
 
