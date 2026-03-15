@@ -211,7 +211,64 @@
     <div id="games-container">
         <div class="loading">正在連線取得即時賽況...</div>
     </div>
+    <div id="bracket-modal">
+        <div class="bracket-container">
+            <button class="close-bracket" onclick="toggleBracket()">✕</button>
+            <h2 class="bracket-title">WBC 決賽圈賽程表</h2>
+            <div class="bracket-scroll">
+                <div class="bracket-layout">
 
+                    <div class="bracket-round">
+                        <div class="round-title">八強賽 (Quarterfinals)</div>
+                        <div class="match-box">
+                            <div class="match-team winner"><span>🇯🇵 日本</span> <span class="match-score">9</span></div>
+                            <div class="match-team"><span>🇦🇺 澳洲</span> <span class="match-score">1</span></div>
+                        </div>
+                        <div class="match-box">
+                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
+                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
+                        </div>
+                        <div class="match-box">
+                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
+                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
+                        </div>
+                        <div class="match-box">
+                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
+                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
+                        </div>
+                    </div>
+
+                    <div class="bracket-round">
+                        <div class="round-title">四強賽 (Semifinals)</div>
+                        <div class="match-box">
+                            <div class="match-team"><span>🇯🇵 日本</span> <span class="match-score">-</span></div>
+                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
+                        </div>
+                        <div class="match-box">
+                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
+                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
+                        </div>
+                    </div>
+
+                    <div class="bracket-round">
+                        <div class="round-title" style="color: #ffeb3b;">👑 冠軍賽 (Final)</div>
+                        <div class="match-box" style="border-color: #ffeb3b; box-shadow: 0 0 12px rgba(255,235,59,0.2);">
+                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
+                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
+                        </div>
+
+                        <div class="round-title" style="margin-top: 15px; color: #ff9800;">🥉 季軍賽</div>
+                        <div class="match-box" style="border-color: #ff9800;">
+                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
+                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script>
         // 🌟 2026 WBC 終極巨無霸中英對照大辭典 (老師去重複清爽版) 🌟
         const translateDict = {
@@ -909,63 +966,7 @@
                 fetchWBCGames();
             }
         });
-        <div id="bracket-modal">
-        <div class="bracket-container">
-            <button class="close-bracket" onclick="toggleBracket()">✕</button>
-            <h2 class="bracket-title">WBC 決賽圈賽程表</h2>
-            <div class="bracket-scroll">
-                <div class="bracket-layout">
-
-                    <div class="bracket-round">
-                        <div class="round-title">八強賽 (Quarterfinals)</div>
-                        <div class="match-box">
-                            <div class="match-team winner"><span>🇯🇵 日本</span> <span class="match-score">9</span></div>
-                            <div class="match-team"><span>🇦🇺 澳洲</span> <span class="match-score">1</span></div>
-                        </div>
-                        <div class="match-box">
-                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
-                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
-                        </div>
-                        <div class="match-box">
-                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
-                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
-                        </div>
-                        <div class="match-box">
-                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
-                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
-                        </div>
-                    </div>
-
-                    <div class="bracket-round">
-                        <div class="round-title">四強賽 (Semifinals)</div>
-                        <div class="match-box">
-                            <div class="match-team"><span>🇯🇵 日本</span> <span class="match-score">-</span></div>
-                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
-                        </div>
-                        <div class="match-box">
-                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
-                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
-                        </div>
-                    </div>
-
-                    <div class="bracket-round">
-                        <div class="round-title" style="color: #ffeb3b;">👑 冠軍賽 (Final)</div>
-                        <div class="match-box" style="border-color: #ffeb3b; box-shadow: 0 0 12px rgba(255,235,59,0.2);">
-                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
-                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
-                        </div>
-
-                        <div class="round-title" style="margin-top: 15px; color: #ff9800;">🥉 季軍賽</div>
-                        <div class="match-box" style="border-color: #ff9800;">
-                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
-                            <div class="match-team"><span>TBD (待定)</span> <span class="match-score">-</span></div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
+        
     </script>
 </body>
 </html>
