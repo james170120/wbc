@@ -966,7 +966,18 @@
                 fetchWBCGames();
             }
         });
-        
+        // ================= 🏆 賽程圖開關邏輯 =================
+        function toggleBracket() {
+            const modal = document.getElementById('bracket-modal');
+            modal.classList.toggle('open');
+        }
+
+        // 貼心 UX 設計：點擊黑色的半透明背景，也能自動關閉視窗！
+        document.getElementById('bracket-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleBracket();
+            }
+        });
     </script>
 </body>
 </html>
