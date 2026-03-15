@@ -21,10 +21,38 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #121212; color: #ffffff; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; overscroll-behavior-y: none;}
 
         /* ================= 🏆 晉級樹狀圖專屬樣式 ================= */
+        /* 1. 左上角的開啟按鈕 (🌟 升級黃金呼吸燈版) */
         .bracket-btn { 
-            background: none; border: none; color: #e0e0e0; font-size: 1.6rem; cursor: pointer; 
-            padding: 5px; position: absolute; left: 10px; 
-            top: 50%; transform: translateY(-50%); outline: none; -webkit-tap-highlight-color: transparent;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, rgba(0,0,0,0) 70%); /* 淡淡的底光 */
+            border: none; color: #e0e0e0; font-size: 1.7rem; cursor: pointer; 
+            padding: 5px; position: absolute; left: 10px;
+            top: 50%; 
+            outline: none; -webkit-tap-highlight-color: transparent;
+            
+            /* 👇 讓按鈕變成圓形，光暈才會漂亮 */
+            border-radius: 50%; 
+            width: 45px; height: 45px;
+            display: flex; align-items: center; justify-content: center;
+            
+            /* 👇 綁定跳動發光動畫 (2秒一次，無限循環) */
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+
+        /* ✨ 黃金呼吸跳動特效引擎 */
+        @keyframes pulse-glow {
+            0% {
+                transform: translateY(-50%) scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+            }
+            50% {
+                transform: translateY(-50%) scale(1.15); /* 微放大跳動 */
+                box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0); /* 光暈向外擴散並消失 */
+            }
+            100% {
+                transform: translateY(-50%) scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+            }
+        }
         }
         #bracket-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
