@@ -85,6 +85,21 @@
         .match-team:first-child { border-bottom: 1px solid #333; }
         .match-team.winner { color: #ffeb3b; font-weight: bold; text-shadow: 0 0 8px rgba(255,235,59,0.4);}
         .match-score { font-family: monospace; font-size: 1.1rem; }
+        /* ================= 🏅 決賽專屬：冠亞季軍標籤 ================= */
+        .match-team.champion span:first-child::after { 
+            content: "🥇 冠軍"; font-size: 0.75rem; color: #222; background: #ffeb3b; 
+            padding: 2px 6px; border-radius: 4px; margin-left: 8px; font-weight: bold; 
+            box-shadow: 0 0 8px rgba(255,235,59,0.6); vertical-align: middle;
+        }
+        .match-team.runner-up span:first-child::after { 
+            content: "🥈 亞軍"; font-size: 0.75rem; color: #222; background: #e0e0e0; 
+            padding: 2px 6px; border-radius: 4px; margin-left: 8px; font-weight: bold; vertical-align: middle;
+        }
+        .match-team.third-place span:first-child::after { 
+            content: "🥉 季軍"; font-size: 0.75rem; color: #222; background: #ff9800; 
+            padding: 2px 6px; border-radius: 4px; margin-left: 8px; font-weight: bold; 
+            box-shadow: 0 0 8px rgba(255,152,0,0.6); vertical-align: middle;
+        }
         /* ⏰ 每一場比賽的時間標籤 */
         .match-time { 
             text-align: center; color: #888; font-size: 0.8rem; 
@@ -279,8 +294,10 @@
                         <div class="round-title" style="color: #ffeb3b;">👑 冠軍賽 (Final)</div>
                         <div class="match-box" style="border-color: #ffeb3b; box-shadow: 0 0 12px rgba(255,235,59,0.2);">
                             <div class="match-time" style="color: #ffeb3b; border-bottom-color: rgba(255,235,59,0.3);">📅 3月18日 (三) 07:00</div>
-                            <div class="match-team"><span>🇺🇸 美國</span> <span class="match-score">-</span></div>
-                            <div class="match-team"><span>🇻🇪 委內瑞拉</span> <span class="match-score">-</span></div>
+                            
+                            <div class="match-team winner champion"><span>🇻🇪 委內瑞拉</span> <span class="match-score">8</span></div>
+                            
+                            <div class="match-team runner-up"><span>🇺🇸 美國</span> <span class="match-score">3</span></div>
                         </div>
                         
                         <div class="round-title" style="margin-top: 15px; color: #ff9800;">🥉 並列季軍</div>
